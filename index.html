@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rogger Tees Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Graduate&family=Oswald:wght@500;700&family=Playfair+Display:wght@700&family=Noto+Serif:wght@700&family=Bebas+Neue&family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0b0d; --panel:#141417; --panel2:#1b1b1f; --line:#2a2a30; --text:#ececf1; --mute:#8c8c96;
+  --accent:#ffffff; --accent-ink:#0b0b0d; --hi:#e8c15a; --ok:#4fd18b; --warn:#f0a03c;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);font:14px/1.4 Inter,system-ui,sans-serif;overflow:hidden}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input,select,textarea{font:inherit;color:var(--text);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%;outline:none}
+input:focus,select:focus{border-color:#555}
+.btn{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font-weight:600;transition:.15s}
+.btn:hover{border-color:#555}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.primary:hover{opacity:.9}
+.btn.sm{padding:5px 10px;font-size:12px}
+
+/* top bar */
+.top{height:60px;display:flex;align-items:center;gap:20px;padding:0 18px;border-bottom:1px solid var(--line);background:#000}
+.top .logo{height:42px}
+.top .prod{font-weight:600;color:var(--mute);border-left:1px solid var(--line);padding-left:18px}
+.steps{display:flex;align-items:center;gap:10px;margin:0 auto;font-family:'Playfair Display',serif}
+.step{display:flex;align-items:center;gap:8px;color:var(--mute);font-weight:700}
+.step i{width:24px;height:24px;border-radius:50%;border:1.5px solid currentColor;display:grid;place-items:center;font-style:normal;font-size:12px;font-family:Inter}
+.step.on{color:var(--text)} .step.done i{background:var(--text);color:var(--bg);border-color:var(--text)}
+.steps .bar{width:36px;height:1px;background:var(--line)}
+.mode{display:flex;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:3px}
+.mode button{padding:6px 14px;border-radius:7px;font-weight:600;color:var(--mute)}
+.mode button.on{background:var(--accent);color:var(--accent-ink)}
+
+.view{display:none;height:calc(100% - 60px)}
+.view.on{display:flex}
+
+/* rail */
+.rail{width:80px;background:#0f0f11;border-right:1px solid var(--line);display:flex;flex-direction:column;padding-top:8px}
+.rail button{padding:12px 0;display:flex;flex-direction:column;align-items:center;gap:5px;color:var(--mute);font-size:12px;position:relative}
+.rail button svg{width:22px;height:22px}
+.rail button.on{color:var(--text);background:var(--panel)}
+.rail button.on::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;background:var(--text);border-radius:0 3px 3px 0}
+
+/* side panel */
+.side{width:330px;background:var(--panel);border-right:1px solid var(--line);overflow-y:auto;padding:18px}
+.pane{display:none}.pane.on{display:block}
+.side h3{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--mute);margin:18px 0 10px}
+.side h3:first-child{margin-top:0}
+.drop{display:block;border:1.5px dashed #3a3a42;border-radius:14px;padding:28px 16px;text-align:center;color:var(--mute);transition:.15s;cursor:pointer}
+.drop.over{border-color:var(--text);background:#ffffff08;color:var(--text)}
+.drop b{display:block;color:var(--text);font-size:15px;margin:8px 0 4px}
+.lib{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.lib .tile{aspect-ratio:1;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;padding:10px;cursor:grab;
+  background:repeating-conic-gradient(#1e1e22 0 25%,#18181b 0 50%) 0 0/16px 16px;position:relative}
+.lib .tile:hover{border-color:#555}
+.lib .tile img{max-width:100%;max-height:100%;pointer-events:none}
+.lib .tile .x{position:absolute;top:4px;right:6px;color:var(--mute);font-size:14px;display:none}
+.lib .tile:hover .x{display:block}
+.greek{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.greek button{aspect-ratio:1;border:1px solid var(--line);border-radius:8px;background:var(--panel2);font:700 18px 'Noto Serif',serif}
+.greek button:hover{border-color:var(--text)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:var(--panel2);font:700 13px 'Noto Serif',serif}
+.chip:hover{border-color:var(--text)}
+.row{display:flex;gap:8px;align-items:center}
+.field{margin-bottom:10px}
+.field label{display:block;font-size:12px;color:var(--mute);margin-bottom:5px}
+.swatches{display:flex;flex-wrap:wrap;gap:8px}
+.sw{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);cursor:pointer}
+.sw.on{outline:2px solid var(--text);outline-offset:2px}
+.fonts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.fonts button{padding:10px 6px;border:1px solid var(--line);border-radius:8px;background:var(--panel2);font-size:17px}
+.fonts button.on{border-color:var(--text)}
+.hint{font-size:12px;color:var(--mute);margin-top:6px}
+
+/* stage */
+.stage{flex:1;display:flex;flex-direction:column;min-width:0;background:radial-gradient(ellipse at 50% 40%,#1c1c21 0%,#0b0b0d 70%)}
+.tools{height:52px;display:flex;align-items:center;gap:10px;padding:0 16px;border-bottom:1px solid var(--line)}
+.tools .sp{flex:1}
+.tools .ib{width:34px;height:34px;border-radius:8px;display:grid;place-items:center;color:var(--mute)}
+.tools .ib:hover{background:var(--panel2);color:var(--text)}
+.canvasWrap{flex:1;display:grid;place-items:center;position:relative;min-height:0}
+.shirt{position:relative;height:min(78vh,calc(100vw - 760px));aspect-ratio:1;max-height:100%}
+.shirt img.base{width:100%;height:100%;display:block;user-select:none;pointer-events:none}
+.shirt .tint{position:absolute;inset:0;mix-blend-mode:multiply;pointer-events:none;
+  -webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat}
+.print{position:absolute;container-type:inline-size}
+.print.guide{outline:1.5px dashed #ffffff70;outline-offset:0}
+.print.guide.darkguide{outline-color:#00000060}
+.print.over{background:#ffffff14}
+.layer{position:absolute;transform-origin:center;cursor:move;user-select:none;touch-action:none}
+.layer img{width:100%;display:block;pointer-events:none}
+.layer .txt{white-space:nowrap;line-height:1;text-align:center}
+.layer.sel{outline:1.5px solid #4ea1ff}
+.layer .h{position:absolute;right:-7px;bottom:-7px;width:14px;height:14px;background:#fff;border:2px solid #4ea1ff;border-radius:3px;cursor:nwse-resize;display:none}
+.layer .r{position:absolute;left:50%;top:-26px;width:14px;height:14px;margin-left:-7px;background:#fff;border:2px solid #4ea1ff;border-radius:50%;cursor:grab;display:none}
+.layer.sel .h,.layer.sel .r{display:block}
+.sides{display:flex;gap:10px;justify-content:center;padding:16px}
+.sides button{padding:10px 20px;border-radius:8px;background:var(--panel2);border:1px solid var(--line);font-weight:600}
+.sides button.on{background:var(--accent);color:var(--accent-ink)}
+.empty-hint{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-size:12px;pointer-events:none;padding:10px}
+
+/* right props */
+.props{width:280px;background:var(--panel);border-left:1px solid var(--line);padding:18px;overflow-y:auto;display:flex;flex-direction:column}
+.props h3{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--mute);margin:0 0 10px}
+.layers{display:flex;flex-direction:column;gap:6px;margin-bottom:18px}
+.layers .li{display:flex;align-items:center;gap:8px;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--panel2);cursor:pointer}
+.layers .li.on{border-color:#4ea1ff}
+.layers .li .th{width:30px;height:30px;border-radius:5px;background:#26262b;display:grid;place-items:center;overflow:hidden;font:700 12px 'Noto Serif',serif}
+.layers .li .th img{max-width:100%;max-height:100%}
+.layers .li span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}
+.price{margin-top:auto;border-top:1px solid var(--line);padding-top:16px}
+.price .big{font-size:28px;font-weight:700}
+.muted{color:var(--mute)}
+
+/* modal */
+.modal{position:fixed;inset:0;background:#000a;display:none;place-items:center;z-index:50}
+.modal.on{display:grid}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;width:min(560px,92vw);max-height:90vh;overflow:auto}
+.card h2{font-size:20px;margin-bottom:4px}
+.sizes{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.sizes div{text-align:center}.sizes label{font-size:12px;color:var(--mute)}
+.sizes input{text-align:center;padding:8px 4px}
+
+/* admin */
+.admin{flex:1;overflow-y:auto;padding:28px}
+.admin h1{font-size:24px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:20px 0}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+.stat .n{font-size:28px;font-weight:700;margin-top:4px}
+.tabs{display:flex;gap:6px;margin-bottom:14px}
+.tabs button{padding:7px 14px;border-radius:999px;border:1px solid var(--line);color:var(--mute);font-weight:600}
+.tabs button.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+.orders{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.order{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.order .pv{display:grid;grid-template-columns:1fr 1fr;background:radial-gradient(#1e1e23,#121215)}
+.order .pv .shirt{height:auto;width:100%}
+.order .body{padding:14px}
+.order .meta{display:flex;justify-content:space-between;align-items:start;gap:8px}
+.badge{font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;background:#2a2a30;white-space:nowrap}
+.badge.Submitted{background:#3a2f12;color:var(--hi)}.badge.Approved{background:#12331f;color:var(--ok)}
+.badge.Production{background:#13263d;color:#6fb2ff}.badge.Shipped{background:#2a2a30;color:var(--mute)}.badge.Proof{background:#3a2412;color:var(--warn)}
+.order .sz{font-size:12px;color:var(--mute);margin:8px 0}
+.order .act{display:flex;gap:6px;margin-top:10px}
+.order .act select{padding:6px 8px;font-size:12px}
+.settings{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;max-width:900px}
+.blank{border:1px dashed var(--line);border-radius:14px;padding:40px;text-align:center;color:var(--mute)}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--text);color:var(--bg);padding:10px 18px;border-radius:10px;font-weight:600;opacity:0;transition:.25s;z-index:60;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%)}
+@media (max-width:1100px){.props{display:none}.shirt{height:min(70vh,calc(100vw - 460px))}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <img class="logo" src="assets/logo.png" alt="Rogger Tees">
+  <div class="prod" id="prodName">Essential Cotton Tee</div>
+  <div class="steps" id="steps">
+    <div class="step done"><i>✓</i>Product</div><div class="bar"></div>
+    <div class="step on"><i>2</i>Design</div><div class="bar"></div>
+    <div class="step"><i>3</i>Detail</div><div class="bar"></div>
+    <div class="step"><i>4</i>Price</div>
+  </div>
+  <div class="mode">
+    <button class="on" data-mode="client">Client Studio</button>
+    <button data-mode="admin">Rogger HQ</button>
+  </div>
+</header>
+
+<!-- ============ CLIENT ============ -->
+<section class="view on" id="client">
+  <nav class="rail">
+    <button class="on" data-pane="upload"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 16V4m0 0l-4 4m4-4l4 4M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>Upload</button>
+    <button data-pane="text"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 6V4h14v2M12 4v16m-3 0h6"/></svg>Text</button>
+    <button data-pane="greek"><svg viewBox="0 0 24 24"><text x="12" y="18" text-anchor="middle" font-size="17" font-family="Noto Serif" font-weight="700" fill="currentColor">Σ</text></svg>Greek</button>
+    <button data-pane="product"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 3l-5 3 2 5 3-1v11h8V10l3 1 2-5-5-3a4 4 0 01-8 0z"/></svg>Product</button>
+  </nav>
+
+  <aside class="side">
+    <div class="pane on" id="pane-upload">
+      <h3>Upload artwork</h3>
+      <label class="drop" id="drop">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 16V4m0 0l-4 4m4-4l4 4M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>
+        <b>Drag & drop your design</b>
+        PNG, JPG, SVG — or click to browse
+        <input type="file" id="file" accept="image/*" multiple hidden>
+      </label>
+      <h3>Your library <span class="muted" style="text-transform:none;letter-spacing:0">— drag onto the shirt</span></h3>
+      <div class="lib" id="lib"></div>
+    </div>
+
+    <div class="pane" id="pane-text">
+      <h3>Add text</h3>
+      <div class="field"><input id="textIn" placeholder="e.g. FALL RUSH 2026" value="FALL RUSH"></div>
+      <button class="btn primary" style="width:100%" id="addText">+ Add text to shirt</button>
+      <h3>Font</h3>
+      <div class="fonts" id="fontList"></div>
+      <h3>Quick add</h3>
+      <div class="chips" id="quickText"></div>
+    </div>
+
+    <div class="pane" id="pane-greek">
+      <h3>Build letters</h3>
+      <div class="row field"><input id="greekIn" placeholder="Tap letters below" style="font:700 20px 'Noto Serif',serif;letter-spacing:.06em"><button class="btn sm" id="greekClr">Clear</button></div>
+      <button class="btn primary" style="width:100%" id="addGreek">+ Add letters to shirt</button>
+      <h3>Greek alphabet</h3>
+      <div class="greek" id="greekGrid"></div>
+      <h3>Popular chapters</h3>
+      <div class="chips" id="orgs"></div>
+    </div>
+
+    <div class="pane" id="pane-product">
+      <h3>Product</h3>
+      <div class="field"><select id="garment"></select></div>
+      <h3>Color</h3>
+      <div class="swatches" id="colors"></div>
+      <p class="hint" id="colorName"></p>
+    </div>
+  </aside>
+
+  <main class="stage">
+    <div class="tools">
+      <button class="ib" id="undo" title="Undo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 14L4 9l5-5M4 9h11a5 5 0 010 10h-3"/></svg></button>
+      <button class="ib" id="guideBtn" title="Toggle print area"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-dasharray="3 2"><rect x="4" y="4" width="16" height="16" rx="1"/></svg></button>
+      <button class="ib" id="centerBtn" title="Center selected"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M7 8h10v8H7z"/></svg></button>
+      <div class="sp"></div>
+      <span class="muted" id="status" style="font-size:12px"></span>
+      <button class="btn primary" id="nextBtn">Continue to details →</button>
+    </div>
+    <div class="canvasWrap">
+      <div class="shirt" id="shirt"></div>
+    </div>
+    <div class="sides" id="sideBtns">
+      <button class="on" data-side="front">Front</button>
+      <button data-side="back">Back</button>
+    </div>
+  </main>
+
+  <aside class="props">
+    <h3>Layers</h3>
+    <div class="layers" id="layerList"></div>
+    <div id="propBox"></div>
+    <div class="price">
+      <div class="muted" style="font-size:12px">Estimated per shirt (24+ pcs)</div>
+      <div class="big" id="unitPrice">$0.00</div>
+      <div class="muted" style="font-size:12px" id="priceNote"></div>
+    </div>
+  </aside>
+</section>
+
+<!-- ============ ADMIN ============ -->
+<section class="view" id="admin">
+  <nav class="rail">
+    <button class="on" data-apane="orders"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Orders</button>
+    <button data-apane="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10l2 2M5 19l2-2m10-10l2-2"/></svg>Pricing</button>
+  </nav>
+  <div class="admin">
+    <div id="apane-orders">
+      <div class="row" style="justify-content:space-between">
+        <div><h1>Order queue</h1><div class="muted">Designs submitted by chapters through Client Studio</div></div>
+        <button class="btn sm" id="seedBtn">Load demo orders</button>
+      </div>
+      <div class="stats" id="stats"></div>
+      <div class="tabs" id="filterTabs"></div>
+      <div class="orders" id="orderGrid"></div>
+    </div>
+    <div id="apane-settings" style="display:none">
+      <h1>Pricing & catalog</h1>
+      <div class="muted" style="margin-bottom:20px">These rates drive the live price clients see in the studio.</div>
+      <div class="settings">
+        <div class="stat"><label class="muted">Blank cost / shirt</label><input type="number" step=".25" id="pBase" style="margin-top:8px"></div>
+        <div class="stat"><label class="muted">Per print location</label><input type="number" step=".25" id="pLoc" style="margin-top:8px"></div>
+        <div class="stat"><label class="muted">Per extra element</label><input type="number" step=".25" id="pEl" style="margin-top:8px"></div>
+        <div class="stat"><label class="muted">Margin %</label><input type="number" step="1" id="pMargin" style="margin-top:8px"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- submit modal -->
+<div class="modal" id="modal">
+  <div class="card">
+    <h2>Order details</h2>
+    <p class="muted" style="margin-bottom:18px">Tell us who it's for and how many — we'll send a proof before anything prints.</p>
+    <div class="row"><div class="field" style="flex:1"><label>Chapter / organization</label><input id="oOrg" placeholder="Alpha Sigma Phi — Beta Chapter"></div></div>
+    <div class="row">
+      <div class="field" style="flex:1"><label>Contact name</label><input id="oName"></div>
+      <div class="field" style="flex:1"><label>Email</label><input id="oEmail" type="email"></div>
+    </div>
+    <div class="row">
+      <div class="field" style="flex:1"><label>Order name</label><input id="oTitle" placeholder="Fall Rush 2026"></div>
+      <div class="field" style="flex:1"><label>Need-by date</label><input id="oDate" type="date"></div>
+    </div>
+    <div class="field"><label>Sizes</label><div class="sizes" id="sizeIn"></div></div>
+    <div class="field"><label>Notes</label><textarea id="oNotes" rows="2"></textarea></div>
+    <div class="row" style="justify-content:space-between;margin-top:14px">
+      <div><div class="muted" style="font-size:12px">Estimated total</div><div style="font-size:22px;font-weight:700" id="oTotal">$0</div></div>
+      <div class="row"><button class="btn" id="mCancel">Back to design</button><button class="btn primary" id="mSubmit">Submit for proof</button></div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const uid=()=>Math.random().toString(36).slice(2,9);
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}}};
+const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),2200)};
+
+const TEE_COLORS=[['White','#ffffff','white'],['Black','#1a1a1a','black'],['Navy','#1f2a44','navy'],['Forest Green','#24452f','forest'],['Heather Gray','#9a9a9a','gray'],['Royal','#2a4fa8'],['Carolina','#7fb2e0'],['Maroon','#6b1f2a'],['Cardinal','#a8202d'],['Sand','#d9c7a3'],['Pink','#f1b8c8'],['Purple','#4e2f7a']];
+const HOODIE_COLORS=[['Heather Gray','#a9acaf','gray'],['White','#ffffff','white'],['Black','#2b2b2b'],['Navy','#1f2a44'],['Forest Green','#24452f'],['Maroon','#6b1f2a'],['Cardinal','#a8202d'],['Royal','#2a4fa8'],['Carolina','#7fb2e0'],['Sand','#d9c7a3'],['Pink','#f1b8c8'],['Purple','#4e2f7a']];
+const GARMENTS=[
+  {name:'Essential Cotton Tee',cost:6.5,key:'shirt',colors:TEE_COLORS,print:{front:[31,22,38,50],back:[31,20,38,55]}},
+  {name:'Heavyweight Hoodie',cost:16,key:'hoodie',colors:HOODIE_COLORS,print:{front:[34,37,32,24],back:[31,33,38,48]}}
+];
+const G=d=>GARMENTS[d.garment]||GARMENTS[0];
+const colorOf=d=>G(d).colors.find(x=>x[1]===d.color);
+const blankFor=(d,sd)=>`assets/${G(d).key}-${colorOf(d)?.[2]||'white'}-${sd}.png`;
+const INK=['#ffffff','#111111','#c8102e','#1f3a93','#d4af37','#2e7d32','#6b1f2a','#7fb2e0','#f1b8c8','#5a2d82'];
+const FONTS=[['Graduate','Varsity'],['Oswald','Block'],['Playfair Display','Serif'],['Noto Serif','Greek'],['Bebas Neue','Condensed'],['Permanent Marker','Marker']];
+const GREEK='Α Β Γ Δ Ε Ζ Η Θ Ι Κ Λ Μ Ν Ξ Ο Π Ρ Σ Τ Υ Φ Χ Ψ Ω'.split(' ');
+const ORGS=['ΑΣΦ','ΧΦ','ΣΧ','ΦΔΘ','ΚΣ','ΣΑΕ','ΠΚΑ','ΘΧ','ΔΤΔ','ΣΝ','ΚΑ','ΦΚΨ','ΑΤΩ','ΒΘΠ','ΚΔ','ΑΧΩ','ΔΓ','ΧΩ','ΑΦ','ΚΚΓ'];
+const QUICK=['FALL RUSH','BID DAY','PARENTS WEEKEND','FORMAL 2026','PHILANTHROPY','EST. 1909','BROTHERHOOD','SISTERHOOD'];
+const STATUSES=['Submitted','Proof','Approved','Production','Shipped'];
+const STATUS_LABEL={Submitted:'Submitted',Proof:'Proof sent',Approved:'Approved',Production:'In production',Shipped:'Shipped'};
+const SIZES=['XS','S','M','L','XL','2XL'];
+
+let pricing=store.get('rt_pricing',{base:6.5,loc:3.5,el:0.75,margin:45});
+let design={garment:0,color:'#ffffff',layers:[]};
+let side='front', sel=null, guide=true, history=[], font='Graduate', lib=store.get('rt_lib',[]);
+
+/* ---------- render shirt (shared by studio + admin) ---------- */
+function shirtHTML(d,sd,interactive){
+  const real=colorOf(d)?.[2], pa=G(d).print[sd];
+  const tint=real?'':`<div class="tint" style="--m:url(assets/${G(d).key}-white-${sd}.png);background:${d.color}"></div>`;
+  const ls=d.layers.filter(l=>l.side===sd).map(l=>layerHTML(l,interactive)).join('');
+  const dark=isLight(d.color);
+  return `<img class="base" src="${blankFor(d,sd)}" alt="">${tint}<div style="left:${pa[0]}%;top:${pa[1]}%;width:${pa[2]}%;height:${pa[3]}%" class="print ${interactive&&guide?'guide':''} ${dark?'darkguide':''}" data-print>${ls}${interactive&&!ls?`<div class="empty-hint" style="color:${dark?'#0007':'#fff8'}">Drop artwork here</div>`:''}</div>`;
+}
+function layerHTML(l,interactive){
+  const st=`left:${l.x}%;top:${l.y}%;width:${l.type==='img'?l.w+'%':'auto'};transform:translate(-50%,-50%) rotate(${l.rot||0}deg)`;
+  const inner=l.type==='img'?`<img src="${l.src}">`:`<div class="txt" style="font-family:'${l.font}',serif;font-size:${l.size}cqw;color:${l.color};letter-spacing:${l.ls||0}em;${l.stroke?`-webkit-text-stroke:${l.size/14}cqw ${l.stroke};paint-order:stroke fill`:''}">${esc(l.text)}</div>`;
+  return `<div class="layer ${interactive&&sel===l.id?'sel':''}" data-id="${l.id}" style="${st}">${inner}${interactive?'<div class="h"></div><div class="r"></div>':''}</div>`;
+}
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function isLight(hex){const n=parseInt(hex.slice(1),16);return ((n>>16)*299+((n>>8)&255)*587+(n&255)*114)/1000>150}
+
+function render(){
+  $('#shirt').innerHTML=shirtHTML(design,side,true);
+  bindPrint();
+  renderLayers(); renderProps(); renderPrice();
+  $$('#sideBtns button').forEach(b=>b.classList.toggle('on',b.dataset.side===side));
+  const n=design.layers.length;
+  $('#status').textContent=n?`${n} element${n>1?'s':''} · ${['front','back'].filter(s=>design.layers.some(l=>l.side===s)).join(' + ')||''}`:'';
+  $('#prodName').textContent=G(design).name;$('#garment').value=design.garment;
+}
+function commit(){history.push(JSON.stringify(design));if(history.length>60)history.shift()}
+
+/* ---------- drag & drop / layer manipulation ---------- */
+function bindPrint(){
+  const pa=$('#shirt [data-print]');
+  pa.addEventListener('dragover',e=>{e.preventDefault();pa.classList.add('over')});
+  pa.addEventListener('dragleave',()=>pa.classList.remove('over'));
+  pa.addEventListener('drop',e=>{
+    e.preventDefault();pa.classList.remove('over');
+    const r=pa.getBoundingClientRect(), x=(e.clientX-r.left)/r.width*100, y=(e.clientY-r.top)/r.height*100;
+    const libId=e.dataTransfer.getData('text/lib');
+    if(libId){const it=lib.find(i=>i.id===libId);if(it)addImage(it.src,x,y);return}
+    [...e.dataTransfer.files].filter(f=>f.type.startsWith('image/')).forEach(f=>readFile(f,src=>{addToLib(src,f.name);addImage(src,x,y)}));
+  });
+  pa.addEventListener('pointerdown',e=>{if(e.target===pa||e.target.classList.contains('empty-hint')){sel=null;render()}});
+  pa.querySelectorAll('.layer').forEach(el=>{
+    el.addEventListener('pointerdown',e=>{
+      e.stopPropagation();
+      const l=design.layers.find(x=>x.id===el.dataset.id); if(!l)return;
+      if(sel!==l.id){sel=l.id;render();return startDrag(e,$(`#shirt .layer[data-id="${l.id}"]`),l)}
+      startDrag(e,el,l);
+    });
+  });
+}
+function startDrag(e,el,l){
+  const pa=$('#shirt [data-print]'), r=pa.getBoundingClientRect();
+  const mode=e.target.classList.contains('h')?'resize':e.target.classList.contains('r')?'rotate':'move';
+  commit();
+  const sx=e.clientX, sy=e.clientY, o={...l};
+  const er=el.getBoundingClientRect(), cx=er.left+er.width/2, cy=er.top+er.height/2;
+  const d0=Math.hypot(sx-cx,sy-cy)||1;
+  const mv=ev=>{
+    if(mode==='move'){l.x=clamp(o.x+(ev.clientX-sx)/r.width*100,-10,110);l.y=clamp(o.y+(ev.clientY-sy)/r.height*100,-10,110)}
+    else if(mode==='resize'){const k=Math.hypot(ev.clientX-cx,ev.clientY-cy)/d0; if(l.type==='img')l.w=clamp(o.w*k,5,140);else l.size=clamp(o.size*k,2,60)}
+    else{let a=Math.atan2(ev.clientY-cy,ev.clientX-cx)*180/Math.PI+90; if(Math.abs(a%45)<4||Math.abs(a%45)>41)a=Math.round(a/45)*45; l.rot=Math.round(a)}
+    el.style.left=l.x+'%';el.style.top=l.y+'%';el.style.transform=`translate(-50%,-50%) rotate(${l.rot||0}deg)`;
+    if(l.type==='img')el.style.width=l.w+'%';else el.firstChild.style.fontSize=l.size+'cqw';
+  };
+  const up=()=>{removeEventListener('pointermove',mv);removeEventListener('pointerup',up);render()};
+  addEventListener('pointermove',mv);addEventListener('pointerup',up);
+}
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+
+function readFile(f,cb){
+  const fr=new FileReader();
+  fr.onload=()=>{
+    if(f.type==='image/svg+xml')return cb(fr.result);
+    const im=new Image();im.onload=()=>{const m=1400,s=Math.min(1,m/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);cb(c.toDataURL('image/png'))};im.src=fr.result;
+  };
+  fr.readAsDataURL(f);
+}
+function addToLib(src,name){lib.unshift({id:uid(),src,name});if(!store.set('rt_lib',lib.slice(0,24)))toast('Library full in this browser — design still added');renderLib()}
+function addImage(src,x=50,y=40){commit();const l={id:uid(),type:'img',src,x,y,w:70,rot:0,side};design.layers.push(l);sel=l.id;render()}
+function addText(text,f=font,extra={}){if(!text.trim())return;commit();const l={id:uid(),type:'text',text,font:f,size:text.length>10?9:16,color:isLight(design.color)?'#111111':'#ffffff',x:50,y:30,rot:0,ls:.04,side,...extra};design.layers.push(l);sel=l.id;render()}
+
+/* ---------- side panels ---------- */
+function renderLib(){
+  $('#lib').innerHTML=lib.length?lib.map(i=>`<div class="tile" draggable="true" data-id="${i.id}" title="${esc(i.name||'')}"><img src="${i.src}"><button class="x" data-del="${i.id}">✕</button></div>`).join(''):'<p class="hint" style="grid-column:span 2">Uploads land here. Drag them onto the shirt or click to add.</p>';
+  $$('#lib .tile').forEach(t=>{
+    t.addEventListener('dragstart',e=>e.dataTransfer.setData('text/lib',t.dataset.id));
+    t.addEventListener('click',e=>{if(e.target.dataset.del){lib=lib.filter(i=>i.id!==e.target.dataset.del);store.set('rt_lib',lib);renderLib();return}const it=lib.find(i=>i.id===t.dataset.id);addImage(it.src)});
+  });
+}
+const drop=$('#drop');
+['dragover','dragenter'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('over')}));
+['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,()=>drop.classList.remove('over')));
+drop.addEventListener('drop',e=>{e.preventDefault();[...e.dataTransfer.files].filter(f=>f.type.startsWith('image/')).forEach((f,i)=>readFile(f,src=>{addToLib(src,f.name);if(i===0)addImage(src)}))});
+$('#file').addEventListener('change',e=>{[...e.target.files].forEach((f,i)=>readFile(f,src=>{addToLib(src,f.name);if(i===0)addImage(src)}));e.target.value=''});
+
+$('#fontList').innerHTML=FONTS.map(([f,n])=>`<button data-f="${f}" style="font-family:'${f}'">${n}</button>`).join('');
+$$('#fontList button').forEach(b=>b.onclick=()=>{font=b.dataset.f;$$('#fontList button').forEach(x=>x.classList.toggle('on',x===b));const l=cur();if(l&&l.type==='text'){commit();l.font=font;render()}});
+$('#fontList button').classList.add('on');
+$('#addText').onclick=()=>addText($('#textIn').value);
+$('#textIn').onkeydown=e=>{if(e.key==='Enter')addText(e.target.value)};
+$('#quickText').innerHTML=QUICK.map(q=>`<button class="chip" style="font-family:Inter;font-weight:600">${q}</button>`).join('');
+$$('#quickText .chip').forEach(c=>c.onclick=()=>addText(c.textContent));
+
+$('#greekGrid').innerHTML=GREEK.map(g=>`<button>${g}</button>`).join('');
+$$('#greekGrid button').forEach(b=>b.onclick=()=>{$('#greekIn').value+=b.textContent});
+$('#greekClr').onclick=()=>$('#greekIn').value='';
+$('#addGreek').onclick=()=>addText($('#greekIn').value,'Noto Serif',{size:24,ls:.08});
+$('#orgs').innerHTML=ORGS.map(o=>`<button class="chip">${o}</button>`).join('');
+$$('#orgs .chip').forEach(c=>c.onclick=()=>addText(c.textContent,'Noto Serif',{size:24,ls:.08}));
+
+$('#garment').innerHTML=GARMENTS.map((g,i)=>`<option value="${i}">${g.name}</option>`).join('');
+$('#garment').onchange=e=>{commit();design.garment=+e.target.value;if(!colorOf(design))design.color=G(design).colors[0][1];renderColors();render()};
+function renderColors(){
+  $('#colors').innerHTML=G(design).colors.map(([n,c,k])=>`<div class="sw ${design.color===c?'on':''}" style="background:${c}" data-c="${c}" title="${n}"></div>`).join('');
+  $('#colorName').textContent=colorOf(design)?.[0]||'';
+  $$('#colors .sw').forEach(s=>s.onclick=()=>{design.color=s.dataset.c;renderColors();render()});
+}
+
+$$('#client .rail button').forEach(b=>b.onclick=()=>{$$('#client .rail button').forEach(x=>x.classList.toggle('on',x===b));$$('.pane').forEach(p=>p.classList.toggle('on',p.id==='pane-'+b.dataset.pane))});
+$$('#sideBtns button').forEach(b=>b.onclick=()=>{side=b.dataset.side;sel=null;render()});
+
+/* ---------- right panel ---------- */
+const cur=()=>design.layers.find(l=>l.id===sel);
+function renderLayers(){
+  const ls=design.layers.filter(l=>l.side===side);
+  $('#layerList').innerHTML=ls.length?ls.slice().reverse().map(l=>`<div class="li ${sel===l.id?'on':''}" data-id="${l.id}"><div class="th">${l.type==='img'?`<img src="${l.src}">`:esc(l.text.slice(0,3))}</div><span>${l.type==='img'?'Artwork':esc(l.text)}</span><button data-del="${l.id}" class="muted">✕</button></div>`).join(''):`<p class="hint">Nothing on the ${side} yet.</p>`;
+  $$('#layerList .li').forEach(li=>li.onclick=e=>{if(e.target.dataset.del){commit();design.layers=design.layers.filter(l=>l.id!==e.target.dataset.del);sel=null}else sel=li.dataset.id;render()});
+}
+function renderProps(){
+  const l=cur(), box=$('#propBox');
+  if(!l){box.innerHTML='<p class="hint">Select an element to edit it. Drag to move, corner to resize, top dot to rotate.</p>';return}
+  let h='';
+  if(l.type==='text'){
+    h+=`<h3>Text</h3><div class="field"><input id="pText" value="${esc(l.text)}"></div>
+    <div class="field"><label>Color</label><div class="swatches">${INK.map(c=>`<div class="sw ${l.color===c?'on':''}" data-ink="${c}" style="background:${c};width:24px;height:24px"></div>`).join('')}</div></div>
+    <div class="field"><label>Outline</label><div class="swatches"><div class="sw ${!l.stroke?'on':''}" data-st="" style="width:24px;height:24px;background:linear-gradient(135deg,transparent 45%,#e44 45% 55%,transparent 55%)"></div>${INK.slice(0,6).map(c=>`<div class="sw ${l.stroke===c?'on':''}" data-st="${c}" style="background:${c};width:24px;height:24px"></div>`).join('')}</div></div>
+    <div class="field"><label>Size</label><input type="range" min="2" max="60" step=".5" value="${l.size}" id="pSize"></div>
+    <div class="field"><label>Letter spacing</label><input type="range" min="-.05" max=".5" step=".01" value="${l.ls||0}" id="pLs"></div>`;
+  }else{
+    h+=`<h3>Artwork</h3><div class="field"><label>Width</label><input type="range" min="5" max="140" value="${l.w}" id="pW"></div>`;
+  }
+  h+=`<div class="field"><label>Rotation · ${l.rot||0}°</label><input type="range" min="-180" max="180" value="${l.rot||0}" id="pRot"></div>
+  <div class="row"><button class="btn sm" id="pDup">Duplicate</button><button class="btn sm" id="pFront">Bring forward</button><button class="btn sm" id="pDel" style="color:#ff6b6b">Delete</button></div>`;
+  box.innerHTML=h;
+  const live=(id,fn)=>{const el=$(id);if(!el)return;el.onpointerdown=commit;el.oninput=e=>{fn(e.target.value);$('#shirt').innerHTML=shirtHTML(design,side,true);bindPrint();renderLayers()}};
+  live('#pText',v=>l.text=v); $('#pText')?.addEventListener('focus',commit);
+  live('#pSize',v=>l.size=+v); live('#pLs',v=>l.ls=+v); live('#pW',v=>l.w=+v); live('#pRot',v=>l.rot=+v);
+  $$('[data-ink]').forEach(s=>s.onclick=()=>{commit();l.color=s.dataset.ink;render()});
+  $$('[data-st]').forEach(s=>s.onclick=()=>{commit();l.stroke=s.dataset.st;render()});
+  $('#pDel').onclick=()=>{commit();design.layers=design.layers.filter(x=>x.id!==l.id);sel=null;render()};
+  $('#pDup').onclick=()=>{commit();const c={...l,id:uid(),x:l.x+4,y:l.y+4};design.layers.push(c);sel=c.id;render()};
+  $('#pFront').onclick=()=>{commit();const i=design.layers.indexOf(l);design.layers.splice(i,1);design.layers.push(l);render()};
+}
+function unitPrice(d){
+  const locs=['front','back'].filter(s=>d.layers.some(l=>l.side===s)).length;
+  const els=Math.max(0,d.layers.length-locs);
+  const cost=G(d).cost*(pricing.base/6.5)+locs*pricing.loc+els*pricing.el;
+  return cost*(1+pricing.margin/100);
+}
+function renderPrice(){
+  const locs=['front','back'].filter(s=>design.layers.some(l=>l.side===s)).length;
+  $('#unitPrice').textContent='$'+unitPrice(design).toFixed(2);
+  $('#priceNote').textContent=`${G(design).name} · ${locs} print location${locs===1?'':'s'}`;
+}
+
+/* ---------- toolbar ---------- */
+$('#undo').onclick=()=>{const p=history.pop();if(p){design=JSON.parse(p);sel=null;render();renderColors()}};
+$('#guideBtn').onclick=()=>{guide=!guide;render()};
+$('#centerBtn').onclick=()=>{const l=cur();if(l){commit();l.x=50;render()}};
+addEventListener('keydown',e=>{
+  if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName))return;
+  const l=cur();
+  if((e.key==='Delete'||e.key==='Backspace')&&l){commit();design.layers=design.layers.filter(x=>x!==l);sel=null;render()}
+  if((e.metaKey||e.ctrlKey)&&e.key==='z'){e.preventDefault();$('#undo').click()}
+  if(l&&e.key.startsWith('Arrow')){e.preventDefault();const s=e.shiftKey?2:.5;if(e.key==='ArrowLeft')l.x-=s;if(e.key==='ArrowRight')l.x+=s;if(e.key==='ArrowUp')l.y-=s;if(e.key==='ArrowDown')l.y+=s;render()}
+});
+
+/* ---------- submit flow ---------- */
+function setStep(n){$$('.step').forEach((s,i)=>{s.classList.toggle('done',i<n);s.classList.toggle('on',i===n);s.querySelector('i').textContent=i<n?'✓':i+1})}
+$('#sizeIn').innerHTML=SIZES.map(s=>`<div><label>${s}</label><input type="number" min="0" value="${s==='M'||s==='L'?12:0}" data-size="${s}"></div>`).join('');
+const qty=()=>$$('[data-size]').reduce((a,i)=>a+(+i.value||0),0);
+const updTotal=()=>$('#oTotal').textContent='$'+(qty()*unitPrice(design)).toFixed(2)+` · ${qty()} pcs`;
+$$('[data-size]').forEach(i=>i.oninput=updTotal);
+$('#nextBtn').onclick=()=>{if(!design.layers.length)return toast('Add a design to the shirt first');setStep(2);updTotal();$('#modal').classList.add('on')};
+$('#mCancel').onclick=()=>{setStep(1);$('#modal').classList.remove('on')};
+$('#mSubmit').onclick=()=>{
+  if(!$('#oOrg').value.trim()||!qty())return toast('Add your chapter name and at least one size');
+  const sizes={};$$('[data-size]').forEach(i=>{if(+i.value)sizes[i.dataset.size]=+i.value});
+  const o={id:'RT-'+(1000+orders().length+1),org:$('#oOrg').value,name:$('#oName').value,email:$('#oEmail').value,title:$('#oTitle').value||'Untitled design',due:$('#oDate').value,notes:$('#oNotes').value,sizes,qty:qty(),unit:unitPrice(design),design:JSON.parse(JSON.stringify(design)),status:'Submitted',at:Date.now()};
+  const all=orders();all.unshift(o);
+  if(!store.set('rt_orders',all))return toast('Could not save — artwork too large for demo storage');
+  setStep(3);$('#modal').classList.remove('on');toast(`Order ${o.id} submitted — proof coming soon`);
+  setTimeout(()=>setStep(1),2500);renderAdmin();
+};
+
+/* ---------- admin ---------- */
+const orders=()=>store.get('rt_orders',[]);
+let filter='All';
+function renderAdmin(){
+  const all=orders();
+  const rev=all.reduce((a,o)=>a+o.qty*o.unit,0), pcs=all.reduce((a,o)=>a+o.qty,0);
+  $('#stats').innerHTML=[['Open orders',all.filter(o=>o.status!=='Shipped').length],['Awaiting proof',all.filter(o=>o.status==='Submitted').length],['Pieces in pipeline',pcs],['Pipeline revenue','$'+rev.toLocaleString(undefined,{maximumFractionDigits:0})]].map(([k,v])=>`<div class="stat"><div class="muted">${k}</div><div class="n">${v}</div></div>`).join('');
+  $('#filterTabs').innerHTML=['All',...STATUSES].map(s=>`<button class="${filter===s?'on':''}" data-f="${s}">${s==='All'?'All':STATUS_LABEL[s]} (${s==='All'?all.length:all.filter(o=>o.status===s).length})</button>`).join('');
+  $$('#filterTabs button').forEach(b=>b.onclick=()=>{filter=b.dataset.f;renderAdmin()});
+  const list=all.filter(o=>filter==='All'||o.status===filter);
+  $('#orderGrid').innerHTML=list.length?list.map(o=>`
+    <div class="order">
+      <div class="pv"><div class="shirt">${shirtHTML(o.design,'front')}</div><div class="shirt">${shirtHTML(o.design,'back')}</div></div>
+      <div class="body">
+        <div class="meta"><div><b>${esc(o.org)}</b><div class="muted" style="font-size:12px">${o.id} · ${esc(o.title)}</div></div><span class="badge ${o.status}">${STATUS_LABEL[o.status]}</span></div>
+        <div class="sz">${G(o.design).name} · ${colorOf(o.design)?.[0]||''}<br>${Object.entries(o.sizes).map(([k,v])=>`${k} ${v}`).join(' · ')} — <b style="color:var(--text)">${o.qty} pcs · $${(o.qty*o.unit).toFixed(0)}</b>${o.due?`<br>Need by ${o.due}`:''}${o.name?`<br>${esc(o.name)} ${o.email?'· '+esc(o.email):''}`:''}${o.notes?`<br><i>"${esc(o.notes)}"</i>`:''}</div>
+        <div class="act"><select data-st="${o.id}">${STATUSES.map(s=>`<option value="${s}" ${s===o.status?'selected':''}>${STATUS_LABEL[s]}</option>`).join('')}</select><button class="btn sm" data-open="${o.id}">Open in studio</button><button class="btn sm" data-rm="${o.id}">✕</button></div>
+      </div>
+    </div>`).join(''):'<div class="blank">No orders here yet. Submit one from Client Studio, or load demo orders.</div>';
+  $$('[data-st]').forEach(s=>s.onchange=()=>{const a=orders();a.find(o=>o.id===s.dataset.st).status=s.value;store.set('rt_orders',a);renderAdmin();toast('Status updated')});
+  $$('[data-rm]').forEach(b=>b.onclick=()=>{store.set('rt_orders',orders().filter(o=>o.id!==b.dataset.rm));renderAdmin()});
+  $$('[data-open]').forEach(b=>b.onclick=()=>{const o=orders().find(x=>x.id===b.dataset.open);design=JSON.parse(JSON.stringify(o.design));sel=null;side='front';switchMode('client');renderColors();render();toast(`Editing ${o.id}`)});
+}
+$$('#admin .rail button').forEach(b=>b.onclick=()=>{$$('#admin .rail button').forEach(x=>x.classList.toggle('on',x===b));$('#apane-orders').style.display=b.dataset.apane==='orders'?'':'none';$('#apane-settings').style.display=b.dataset.apane==='settings'?'':'none'});
+[['#pBase','base'],['#pLoc','loc'],['#pEl','el'],['#pMargin','margin']].forEach(([id,k])=>{$(id).value=pricing[k];$(id).oninput=e=>{pricing[k]=+e.target.value;store.set('rt_pricing',pricing);renderPrice()}});
+$('#seedBtn').onclick=()=>{
+  const T=(text,f,o)=>({id:uid(),type:'text',text,font:f,size:24,color:'#ffffff',x:50,y:30,rot:0,ls:.08,side:'front',...o});
+  const demo=[
+    {org:'Alpha Sigma Phi',title:'Fall Rush 2026',status:'Submitted',color:'#1f2a44',sizes:{S:8,M:20,L:22,XL:10},layers:[T('ΑΣΦ','Noto Serif',{size:30,y:35}),T('FALL RUSH','Graduate',{size:10,y:62,color:'#d4af37'}),T('ΑΣΦ','Noto Serif',{size:40,side:'back',y:20,color:'#d4af37',stroke:'#ffffff'})]},
+    {org:'Chi Phi',title:'Bid Day',status:'Proof',color:'#ffffff',sizes:{M:30,L:30,XL:12},layers:[T('CHI PHI','Oswald',{size:18,color:'#c8102e',y:25}),T('BID DAY 2026','Graduate',{size:8,color:'#111111',y:45})]},
+    {org:'Sigma Chi',title:'Parents Weekend',status:'Production',color:'#7fb2e0',sizes:{S:10,M:25,L:25,XL:15,'2XL':5},layers:[T('ΣΧ','Noto Serif',{size:34,color:'#1f3a93',y:30}),T('PARENTS WEEKEND','Bebas Neue',{size:10,color:'#ffffff',y:58})]},
+    {org:'Kappa Delta',title:'Formal 2026',status:'Approved',color:'#f1b8c8',sizes:{XS:12,S:24,M:20},layers:[T('ΚΔ','Playfair Display',{size:30,color:'#1f3a93',y:22}),T('FORMAL','Permanent Marker',{size:14,color:'#ffffff',stroke:'#1f3a93',y:45})]}
+  ].map((d,i)=>{const des={garment:i%2,color:d.color,layers:d.layers};const q=Object.values(d.sizes).reduce((a,b)=>a+b,0);return{id:'RT-'+(900+i),org:d.org,name:'',email:'',title:d.title,due:'',notes:'',sizes:d.sizes,qty:q,unit:unitPrice(des),design:des,status:d.status,at:Date.now()}});
+  store.set('rt_orders',[...orders(),...demo]);renderAdmin();toast('Demo orders loaded');
+};
+
+/* ---------- mode switch ---------- */
+function switchMode(m){$$('.mode button').forEach(b=>b.classList.toggle('on',b.dataset.mode===m));$('#client').classList.toggle('on',m==='client');$('#admin').classList.toggle('on',m==='admin');$('#steps').style.visibility=m==='client'?'visible':'hidden';if(m==='admin')renderAdmin()}
+$$('.mode button').forEach(b=>b.onclick=()=>switchMode(b.dataset.mode));
+
+renderLib();renderColors();render();
+</script>
+</body>
+</html>
