@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rogger Tees Studio</title>
+<title>Rogger Studio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Graduate&family=Oswald:wght@500;700&family=Playfair+Display:wght@700&family=Noto+Serif:wght@700&family=Bebas+Neue&family=Permanent+Marker&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Graduate&family=Oswald:wght@500;700&family=Playfair+Display:wght@700&family=Noto+Serif:wght@700&family=Bebas+Neue&family=Permanent+Marker&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0b0b0d; --panel:#141417; --panel2:#1b1b1f; --line:#2a2a30; --text:#ececf1; --mute:#8c8c96;
@@ -15,17 +15,19 @@
 html,body{height:100%}
 body{background:var(--bg);color:var(--text);font:14px/1.4 Inter,system-ui,sans-serif;overflow:hidden}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:var(--info)}
 input,select,textarea{font:inherit;color:var(--text);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%;outline:none}
 input:focus,select:focus,textarea:focus{border-color:#555}
 input[type=color]{padding:2px;height:36px;width:44px;flex:none}
 input[type=checkbox]{width:auto}
-.btn{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font-weight:600;transition:.15s;white-space:nowrap}
+.btn{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font-weight:600;transition:.15s;white-space:nowrap;text-decoration:none;display:inline-block;color:var(--text)}
 .btn:hover{border-color:#555}
 .btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 .btn.primary:hover{opacity:.9}
 .btn.ok{background:#12331f;color:var(--ok);border-color:#1d4d30}
 .btn.bad{background:#3a1717;color:var(--bad);border-color:#5a2222}
 .btn.sm{padding:5px 10px;font-size:12px}
+.btn.lg{padding:12px 22px;font-size:15px;border-radius:10px}
 .btn:disabled{opacity:.4;cursor:not-allowed}
 .muted{color:var(--mute)}
 .row{display:flex;gap:8px;align-items:center}
@@ -34,24 +36,37 @@ input[type=checkbox]{width:auto}
 .field label,.lbl{display:block;font-size:12px;color:var(--mute);margin-bottom:5px}
 h3.sec{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--mute);margin:18px 0 10px}
 h3.sec:first-child{margin-top:0}
+[hidden]{display:none!important}
 
 /* top bar */
 .top{height:60px;display:flex;align-items:center;gap:18px;padding:0 18px;border-bottom:1px solid var(--line);background:#000}
 .top .logo{height:42px;max-width:150px;object-fit:contain}
-.top .bname{font-weight:700;font-size:16px}
+.top .bname{font-weight:800;font-size:16px}
 .top .prod{font-weight:600;color:var(--mute);border-left:1px solid var(--line);padding-left:18px;white-space:nowrap}
+.top .sp{flex:1}
 .steps{display:flex;align-items:center;gap:10px;margin:0 auto;font-family:'Playfair Display',serif}
 .step{display:flex;align-items:center;gap:8px;color:var(--mute);font-weight:700}
 .step i{width:24px;height:24px;border-radius:50%;border:1.5px solid currentColor;display:grid;place-items:center;font-style:normal;font-size:12px;font-family:Inter}
 .step.on{color:var(--text)} .step.done i{background:var(--text);color:var(--bg);border-color:var(--text)}
 .steps .bar{width:30px;height:1px;background:var(--line)}
-.mode{display:flex;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:3px;margin-left:auto}
-.steps+.mode{margin-left:0}
+.mode{display:flex;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:3px}
 .mode button{padding:6px 14px;border-radius:7px;font-weight:600;color:var(--mute);white-space:nowrap}
 .mode button.on{background:var(--accent);color:var(--accent-ink)}
 
 .view{display:none;height:calc(100% - 60px)}
 .view.on{display:flex}
+#boot{position:fixed;inset:0;display:grid;place-items:center;background:var(--bg);z-index:80;color:var(--mute)}
+
+/* landing + auth */
+.center{flex:1;overflow-y:auto;display:flex;flex-direction:column;align-items:center;padding:60px 20px}
+.hero{max-width:860px;text-align:center}
+.hero h1{font-size:clamp(32px,5vw,56px);line-height:1.05;letter-spacing:-.02em;font-weight:800}
+.hero p{font-size:18px;color:var(--mute);margin:18px auto 28px;max-width:620px}
+.feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;max-width:960px;width:100%;margin-top:50px}
+.feat div{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;text-align:left}
+.feat b{display:block;margin-bottom:6px}
+.authcard{width:min(420px,100%);background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px}
+.authcard h2{font-size:22px;margin-bottom:4px}
 
 /* rail */
 .rail{width:80px;flex:none;background:#0f0f11;border-right:1px solid var(--line);display:flex;flex-direction:column;padding-top:8px;overflow-y:auto}
@@ -148,7 +163,7 @@ h3.sec:first-child{margin-top:0}
 .sizes div{text-align:center}.sizes label{font-size:12px;color:var(--mute)}
 .sizes input{text-align:center;padding:8px 4px}
 .breakdown{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px;font-size:13px}
-.breakdown .l{display:flex;justify-content:space-between;padding:2px 0}
+.breakdown .l{display:flex;justify-content:space-between;padding:2px 0;gap:10px}
 .breakdown .l.t{border-top:1px solid var(--line);margin-top:6px;padding-top:8px;font-weight:700;font-size:15px}
 .drawer{position:fixed;top:0;right:0;bottom:0;width:min(640px,100vw);background:var(--panel);border-left:1px solid var(--line);z-index:40;transform:translateX(100%);transition:.25s;display:flex;flex-direction:column}
 .drawer.on{transform:none;box-shadow:-30px 0 60px #0008}
@@ -183,7 +198,7 @@ table.t tr.click:hover td{background:#ffffff06}
 .badge.Pending{background:#3a2f12;color:var(--hi)}.badge.Approved{background:#12331f;color:var(--ok)}
 .badge.Declined{background:#3a1717;color:var(--bad)}.badge.Production{background:#13263d;color:var(--info)}
 .badge.Ready{background:#2b1f3d;color:#b48cff}.badge.Completed{background:#2a2a30;color:var(--mute)}
-.badge.paid{background:#12331f;color:var(--ok)}.badge.unpaid{background:#2a2a30;color:var(--mute)}
+.badge.paid{background:#12331f;color:var(--ok)}.badge.unpaid{background:#2a2a30;color:var(--mute)}.badge.part{background:#13263d;color:var(--info)}
 .blank{border:1px dashed var(--line);border-radius:14px;padding:40px;text-align:center;color:var(--mute)}
 .prodgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
 .pitem{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
@@ -210,8 +225,10 @@ table.t tr.click:hover td{background:#ffffff06}
 .upl input{position:absolute;inset:0;opacity:0;cursor:pointer}
 .mini{width:36px;height:36px;border-radius:6px;object-fit:contain;background:#26262b;flex:none}
 .notice{background:#3a2f1220;border:1px solid #5a4a1a;color:#e8c15a;border-radius:10px;padding:10px 12px;font-size:12px}
-.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--text);color:var(--bg);padding:10px 18px;border-radius:10px;font-weight:600;opacity:0;transition:.25s;z-index:60;pointer-events:none}
+.notice.good{background:#12331f40;border-color:#1d4d30;color:var(--ok)}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--text);color:var(--bg);padding:10px 18px;border-radius:10px;font-weight:600;opacity:0;transition:.25s;z-index:90;pointer-events:none;max-width:90vw;text-align:center}
 .toast.on{opacity:1;transform:translateX(-50%)}
+.copybox{display:flex;gap:6px}.copybox input{font-size:12px}
 
 /* print proof */
 #proof{display:none}
@@ -226,6 +243,7 @@ table.t tr.click:hover td{background:#ffffff06}
 </style>
 </head>
 <body>
+<div id="boot">Loading…</div>
 
 <header class="top">
   <img class="logo" id="brandLogo" alt="">
@@ -237,14 +255,41 @@ table.t tr.click:hover td{background:#ffffff06}
     <div class="step"><i>3</i>Detail</div><div class="bar"></div>
     <div class="step"><i>4</i>Review</div>
   </div>
-  <div class="mode">
+  <div class="sp" id="topSp"></div>
+  <div class="mode" id="modeToggle" hidden>
     <button class="on" data-mode="client">Design Studio</button>
     <button data-mode="admin">Business HQ</button>
   </div>
+  <button class="btn sm" id="acctBtn" hidden>Sign out</button>
+  <a class="btn sm" id="ownerLink" href="#hq" hidden>Shop owner sign in</a>
 </header>
 
-<!-- ================= CLIENT ================= -->
-<section class="view on" id="client">
+<!-- ================= PLATFORM LANDING (cloud, no shop selected) ================= -->
+<section class="view" id="landing">
+  <div class="center">
+    <div class="hero">
+      <h1>Your own custom apparel<br>design studio.</h1>
+      <p>Give your customers a studio to design shirts and hoodies with their own art, text and Greek letters. You approve every order, and get paid through Stripe.</p>
+      <div class="row" style="justify-content:center"><a class="btn primary lg" href="#hq-signup">Create your shop</a><a class="btn lg" href="#hq">Sign in</a></div>
+    </div>
+    <div class="feat">
+      <div><b>Design studio</b><span class="muted">Drag-and-drop artwork, text, fonts and Greek letters on real product photos, front and back.</span></div>
+      <div><b>Approve or decline</b><span class="muted">Review every design before it prints. Decline with a reason and customers fix and resubmit.</span></div>
+      <div><b>Get paid online</b><span class="muted">Collect deposits and balances with Stripe. Money goes straight to your bank account.</span></div>
+      <div><b>Your products, your prices</b><span class="muted">Add any blank, set colors, sizes, print areas, upcharges and volume discounts.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= AUTH / SHOP SETUP ================= -->
+<section class="view" id="auth">
+  <div class="center">
+    <div class="authcard" id="authCard"></div>
+  </div>
+</section>
+
+<!-- ================= CLIENT STUDIO ================= -->
+<section class="view" id="client">
   <nav class="rail">
     <button class="on" data-pane="product"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 3l-5 3 2 5 3-1v11h8V10l3 1 2-5-5-3a4 4 0 01-8 0z"/></svg>Products</button>
     <button data-pane="upload"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 16V4m0 0l-4 4m4-4l4 4M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>Upload</button>
@@ -263,7 +308,6 @@ table.t tr.click:hover td{background:#ffffff06}
       <p class="hint" id="colorName"></p>
       <div id="prodInfo" class="hint" style="margin-top:14px"></div>
     </div>
-
     <div class="pane" id="pane-upload">
       <h3 class="sec">Upload artwork</h3>
       <label class="drop" id="drop">
@@ -275,7 +319,6 @@ table.t tr.click:hover td{background:#ffffff06}
       <h3 class="sec">Your library <span class="muted" style="text-transform:none;letter-spacing:0">— drag onto the product</span></h3>
       <div class="lib" id="lib"></div>
     </div>
-
     <div class="pane" id="pane-text">
       <h3 class="sec">Add text</h3>
       <div class="field"><input id="textIn" placeholder="e.g. FALL RUSH 2026" value="FALL RUSH"></div>
@@ -285,7 +328,6 @@ table.t tr.click:hover td{background:#ffffff06}
       <h3 class="sec">Quick add</h3>
       <div class="chips" id="quickText"></div>
     </div>
-
     <div class="pane" id="pane-greek">
       <h3 class="sec">Build letters</h3>
       <div class="row field"><input id="greekIn" placeholder="Tap letters below" style="font:700 20px 'Noto Serif',serif;letter-spacing:.06em"><button class="btn sm" id="greekClr">Clear</button></div>
@@ -316,7 +358,7 @@ table.t tr.click:hover td{background:#ffffff06}
     <div class="layers" id="layerList"></div>
     <div id="propBox"></div>
     <div class="price">
-      <div class="muted" style="font-size:12px" id="priceLbl">Price per piece</div>
+      <div class="muted" style="font-size:12px">Price per piece</div>
       <div class="big" id="unitPrice">$0.00</div>
       <div class="muted" style="font-size:12px" id="priceNote"></div>
       <table class="tiers" id="tierTable"></table>
@@ -324,7 +366,7 @@ table.t tr.click:hover td{background:#ffffff06}
   </aside>
 </section>
 
-<!-- ================= ADMIN ================= -->
+<!-- ================= BUSINESS HQ ================= -->
 <section class="view" id="admin">
   <nav class="rail" id="adminRail">
     <button class="on" data-apane="dash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>Dashboard</button>
@@ -335,11 +377,10 @@ table.t tr.click:hover td{background:#ffffff06}
     <button data-apane="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10l2 2M5 19l2-2m10-10l2-2"/></svg>Settings</button>
   </nav>
   <div class="admin">
-
-    <!-- dashboard -->
     <div class="apane on" id="ap-dash">
       <div class="head"><div><h1 id="dashTitle">Dashboard</h1><div class="muted">Everything happening in your shop</div></div>
-        <div class="row"><button class="btn sm" id="copyLink">Copy customer link</button><button class="btn sm" id="seedBtn">Load demo orders</button></div></div>
+        <div class="row"><button class="btn sm" id="copyLink">Copy customer link</button><button class="btn sm" id="seedBtn" hidden>Load demo orders</button></div></div>
+      <div id="dashNotice"></div>
       <div class="stats" id="dashStats"></div>
       <div class="grid2">
         <div class="box"><h2>Needs your review</h2><div id="reviewList"></div></div>
@@ -350,7 +391,6 @@ table.t tr.click:hover td{background:#ffffff06}
       </div>
     </div>
 
-    <!-- orders -->
     <div class="apane" id="ap-orders">
       <div class="head"><div><h1>Orders</h1><div class="muted">Approve, decline and move orders through production</div></div>
         <div class="row"><input id="orderSearch" placeholder="Search orders, customers…" style="width:240px"><button class="btn sm" id="csvBtn">Export CSV</button></div></div>
@@ -358,14 +398,12 @@ table.t tr.click:hover td{background:#ffffff06}
       <div class="box" style="padding:0;overflow-x:auto"><table class="t" id="orderTable"></table></div>
     </div>
 
-    <!-- products -->
     <div class="apane" id="ap-products">
       <div class="head"><div><h1>Products</h1><div class="muted">What customers can design on. Set blanks, colors, sizes, print areas and prices.</div></div>
         <button class="btn primary" id="newProduct">+ Add product</button></div>
       <div class="prodgrid" id="prodGrid"></div>
     </div>
 
-    <!-- pricing -->
     <div class="apane" id="ap-pricing">
       <div class="head"><div><h1>Pricing</h1><div class="muted">Per-product prices and shop-wide quantity discounts</div></div></div>
       <div class="box"><h2>Product prices</h2>
@@ -375,57 +413,56 @@ table.t tr.click:hover td{background:#ffffff06}
       <div class="grid2">
         <div class="box"><h2>Quantity discounts</h2><div id="tierEdit"></div><button class="btn sm" id="addTier" style="margin-top:8px">+ Add tier</button></div>
         <div class="box"><h2>Order rules</h2>
-          <div class="field"><label>Deposit required to start production (%)</label><input type="number" id="sDeposit" min="0" max="100"></div>
+          <div class="field"><label>Deposit required after approval (%) — 0 or 100 means pay in full</label><input type="number" id="sDeposit" min="0" max="100"></div>
           <div class="field"><label>Rush fee (% added when need-by date is under 7 days)</label><input type="number" id="sRush" min="0"></div>
           <div class="field"><label>Sales tax (%)</label><input type="number" id="sTax" min="0" step=".01"></div>
         </div>
       </div>
     </div>
 
-    <!-- customers -->
     <div class="apane" id="ap-customers">
       <div class="head"><div><h1>Customers</h1><div class="muted">Everyone who has ordered through your studio</div></div></div>
       <div class="box" style="padding:0;overflow-x:auto"><table class="t" id="custTable"></table></div>
     </div>
 
-    <!-- settings -->
     <div class="apane" id="ap-settings">
-      <div class="head"><div><h1>Settings</h1><div class="muted">Branding and shop details customers see</div></div></div>
+      <div class="head"><div><h1>Settings</h1><div class="muted">Payments, branding and shop details</div></div></div>
       <div class="grid2">
-        <div class="box"><h2>Branding</h2>
-          <div class="field"><label>Business name</label><input id="sName"></div>
-          <div class="field"><label>Logo</label><div class="row"><img id="sLogoPrev" class="mini" style="width:90px;height:48px;background:#000"><label class="btn sm upl">Upload logo<input type="file" accept="image/*" id="sLogo"></label><button class="btn sm" id="sLogoReset">Reset</button></div></div>
-          <div class="field"><label>Accent color (buttons & highlights)</label><div class="row"><input type="color" id="sAccent"><span class="muted" style="font-size:12px">Used across the studio and HQ</span></div></div>
-          <div class="field"><label>Turnaround shown to customers</label><input id="sTurn"></div>
+        <div>
+          <div class="box" id="payBox"><h2>Online payments (Stripe)</h2><div id="payBody"></div></div>
+          <div class="box"><h2>Branding</h2>
+            <div class="field"><label>Business name</label><input id="sName"></div>
+            <div class="field" id="slugField"><label>Shop link</label><div class="row"><span class="muted" style="font-size:12px;white-space:nowrap" id="slugPrefix"></span><input id="sSlug"></div></div>
+            <div class="field"><label>Logo</label><div class="row"><img id="sLogoPrev" class="mini" style="width:90px;height:48px;background:#000"><label class="btn sm upl">Upload logo<input type="file" accept="image/*" id="sLogo"></label><button class="btn sm" id="sLogoReset">Remove</button></div></div>
+            <div class="field"><label>Accent color (buttons & highlights)</label><div class="row"><input type="color" id="sAccent"><span class="muted" style="font-size:12px">Used across the studio and HQ</span></div></div>
+            <div class="field"><label>Turnaround shown to customers</label><input id="sTurn"></div>
+          </div>
         </div>
         <div>
           <div class="box"><h2>Contact & notifications</h2>
-            <div class="field"><label>Shop email (orders go here)</label><input id="sEmail" type="email"></div>
+            <div class="field"><label>Shop email (new-order emails go here)</label><input id="sEmail" type="email"></div>
             <div class="field"><label>Shop phone</label><input id="sPhone"></div>
           </div>
-          <div class="box"><h2>HQ access</h2>
+          <div class="box" id="pinBox"><h2>HQ access</h2>
             <div class="field"><label>HQ passcode (leave blank for none)</label><input id="sPin" type="password" autocomplete="new-password"></div>
-            <p class="hint">Customers opening your link land in the Design Studio. Business HQ asks for this passcode.</p>
+            <p class="hint">Demo mode only. Once connected to Supabase, HQ uses real logins.</p>
           </div>
           <div class="box"><h2>Data</h2>
-            <div class="row"><button class="btn sm" id="exportAll">Back up all data</button><label class="btn sm upl">Restore backup<input type="file" accept=".json" id="importAll"></label><button class="btn sm bad" id="resetAll">Reset shop</button></div>
+            <div class="row" style="flex-wrap:wrap"><button class="btn sm" id="exportAll">Download backup</button><label class="btn sm upl" id="importWrap">Restore backup<input type="file" accept=".json" id="importAll"></label><button class="btn sm bad" id="resetAll">Reset demo shop</button></div>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- order detail drawer -->
 <div class="scrim" id="scrim"></div>
 <aside class="drawer" id="drawer"><div class="dh" id="dHead"></div><div class="db" id="dBody"></div><div class="df" id="dFoot"></div></aside>
 
-<!-- submit modal -->
 <div class="modal" id="orderModal">
   <div class="card">
     <h2>Order details</h2>
-    <p class="muted" style="margin-bottom:18px" id="omSub">Tell us who it's for and how many. We review every design before anything prints.</p>
+    <p class="muted" style="margin-bottom:18px" id="omSub"></p>
     <div class="field"><label>Organization / chapter</label><input id="oOrg" placeholder="Alpha Sigma Phi — Beta Chapter"></div>
     <div class="row"><div class="field grow"><label>Contact name</label><input id="oName"></div><div class="field grow"><label>Email</label><input id="oEmail" type="email"></div></div>
     <div class="row"><div class="field grow"><label>Phone</label><input id="oPhone"></div><div class="field grow"><label>Need-by date</label><input id="oDate" type="date"></div></div>
@@ -436,715 +473,16 @@ table.t tr.click:hover td{background:#ffffff06}
     <div class="row" style="justify-content:flex-end;margin-top:14px"><button class="btn" id="mCancel">Back to design</button><button class="btn primary" id="mSubmit">Submit for review</button></div>
   </div>
 </div>
-
-<!-- decline / approve modal -->
 <div class="modal" id="decideModal"><div class="card" id="decideCard"></div></div>
-
-<!-- my orders modal -->
-<div class="modal" id="myModal"><div class="card" style="width:min(720px,94vw)">
-  <div class="row" style="justify-content:space-between"><h2>My orders</h2><button class="btn sm" id="myClose">Close</button></div>
-  <p class="muted" style="margin:4px 0 14px">Enter the email you ordered with to see status, approvals and messages.</p>
-  <div class="row field"><input id="myEmail" type="email" placeholder="you@school.edu"><button class="btn primary" id="myGo">Look up</button></div>
-  <div id="myList"></div>
-</div></div>
+<div class="modal" id="myModal"><div class="card" style="width:min(720px,94vw)" id="myCard"></div></div>
+<div class="modal" id="statusModal"><div class="card" style="width:min(720px,94vw)" id="statusCard"></div></div>
 
 <div id="proof"></div>
 <div class="toast" id="toast"></div>
 
-<script>
-/* =========================================================
-   Storage + helpers
-   ========================================================= */
-const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const uid=()=>Math.random().toString(36).slice(2,9);
-const NS='rts1_';
-const store={get(k,d){try{const v=localStorage.getItem(NS+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(NS+k,JSON.stringify(v));return true}catch(e){toast('Browser storage is full — remove some images or back up and reset');return false}}};
-const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),2400)};
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const money=n=>'$'+(+n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
-const money0=n=>'$'+Math.round(+n||0).toLocaleString();
-const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-const fmtDate=t=>new Date(t).toLocaleDateString(undefined,{month:'short',day:'numeric'});
-const fmtDT=t=>new Date(t).toLocaleString(undefined,{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
-function isLight(hex){const n=parseInt((hex||'#fff').slice(1),16);return ((n>>16)*299+((n>>8)&255)*587+(n&255)*114)/1000>150}
-
-const ALL_SIZES=['YS','YM','YL','XS','S','M','L','XL','2XL','3XL','4XL','5XL','OS'];
-const STATUSES=['Pending','Approved','Declined','Production','Ready','Completed'];
-const SLABEL={Pending:'Needs review',Approved:'Approved',Declined:'Declined',Production:'In production',Ready:'Ready',Completed:'Completed'};
-const NEXT={Approved:'Production',Production:'Ready',Ready:'Completed'};
-const NEXT_LABEL={Approved:'Start production',Production:'Mark ready',Ready:'Mark completed'};
-const DECLINE_REASONS=['Artwork resolution too low to print','Design uses copyrighted or trademarked material','Below minimum quantity','Design extends outside the print area','Colors/details not printable as submitted','Need-by date is too soon'];
-
-/* =========================================================
-   Defaults (shop, products)
-   ========================================================= */
-const DEFAULT_SETTINGS={name:'Rogger Tees',logo:'assets/logo.png',accent:'#ffffff',turnaround:'10–14 business days after approval',email:'',phone:'',pin:'',
-  tiers:[{min:24,off:0},{min:48,off:5},{min:72,off:8},{min:144,off:12}],deposit:50,rush:15,tax:0,nextOrder:1001};
-const DEFAULT_PRODUCTS=[
-  {id:'tee',name:'Essential Cotton Tee',category:'T-Shirts',active:true,price:14,extraLoc:4,extraEl:0.75,cost:4.5,minQty:12,
-   sizes:['S','M','L','XL','2XL','3XL'],upcharge:{'2XL':2,'3XL':3},
-   images:{front:'assets/shirt-white-front.png',back:'assets/shirt-white-back.png'},
-   print:{front:[31,22,38,50],back:[31,20,38,55]},
-   colors:[{id:'white',name:'White',hex:'#ffffff'},{id:'black',name:'Black',hex:'#1a1a1a',front:'assets/shirt-black-front.png',back:'assets/shirt-black-back.png'},
-    {id:'navy',name:'Navy',hex:'#1f2a44',front:'assets/shirt-navy-front.png',back:'assets/shirt-navy-back.png'},{id:'forest',name:'Forest Green',hex:'#24452f',front:'assets/shirt-forest-front.png',back:'assets/shirt-forest-back.png'},
-    {id:'gray',name:'Heather Gray',hex:'#9a9a9a',front:'assets/shirt-gray-front.png',back:'assets/shirt-gray-back.png'},
-    {id:'royal',name:'Royal',hex:'#2a4fa8'},{id:'carolina',name:'Carolina',hex:'#7fb2e0'},{id:'maroon',name:'Maroon',hex:'#6b1f2a'},{id:'cardinal',name:'Cardinal',hex:'#a8202d'},
-    {id:'sand',name:'Sand',hex:'#d9c7a3'},{id:'pink',name:'Pink',hex:'#f1b8c8'},{id:'purple',name:'Purple',hex:'#4e2f7a'}]},
-  {id:'hoodie',name:'Heavyweight Hoodie',category:'Fleece',active:true,price:34,extraLoc:5,extraEl:1,cost:14,minQty:12,
-   sizes:['S','M','L','XL','2XL','3XL'],upcharge:{'2XL':3,'3XL':4},
-   images:{front:'assets/hoodie-white-front.png',back:'assets/hoodie-white-back.png'},
-   print:{front:[34,37,32,24],back:[31,33,38,48]},
-   colors:[{id:'hgray',name:'Heather Gray',hex:'#a9acaf',front:'assets/hoodie-gray-front.png',back:'assets/hoodie-gray-back.png'},{id:'white',name:'White',hex:'#ffffff'},
-    {id:'black',name:'Black',hex:'#2b2b2b'},{id:'navy',name:'Navy',hex:'#1f2a44'},{id:'forest',name:'Forest Green',hex:'#24452f'},{id:'maroon',name:'Maroon',hex:'#6b1f2a'},
-    {id:'cardinal',name:'Cardinal',hex:'#a8202d'},{id:'royal',name:'Royal',hex:'#2a4fa8'},{id:'carolina',name:'Carolina',hex:'#7fb2e0'},{id:'sand',name:'Sand',hex:'#d9c7a3'},
-    {id:'pink',name:'Pink',hex:'#f1b8c8'},{id:'purple',name:'Purple',hex:'#4e2f7a'}]}
-];
-let settings={...DEFAULT_SETTINGS,...store.get('settings',{})};
-let products=store.get('products',null)||JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
-let orders=store.get('orders',[]);
-const saveSettings=()=>store.set('settings',settings), saveProducts=()=>store.set('products',products), saveOrders=()=>store.set('orders',orders);
-const activeProducts=()=>products.filter(p=>p.active);
-const P=id=>products.find(p=>p.id===id);
-
-/* =========================================================
-   Pricing engine
-   ========================================================= */
-function tierOff(q){let off=0;settings.tiers.slice().sort((a,b)=>a.min-b.min).forEach(t=>{if(q>=t.min)off=t.off});return off}
-function quote(d,sizes={},due){
-  const p=P(d.productId);
-  if(!p)return {unit:0,total:0,qty:0,locs:0,lines:[]};
-  const locs=Math.max(1,['front','back'].filter(s=>d.layers.some(l=>l.side===s)).length);
-  const extraEls=Math.max(0,d.layers.length-locs);
-  const base=p.price+(locs-1)*p.extraLoc+extraEls*p.extraEl;
-  const qty=Object.values(sizes).reduce((a,b)=>a+(+b||0),0);
-  const off=tierOff(qty), unit=base*(1-off/100);
-  let sub=0, up=0;
-  Object.entries(sizes).forEach(([s,n])=>{n=+n||0;sub+=unit*n;up+=(p.upcharge?.[s]||0)*n});
-  const rushDays=due?(new Date(due)-Date.now())/864e5:99;
-  const rush=rushDays<7&&settings.rush?(sub+up)*settings.rush/100:0;
-  const tax=(sub+up+rush)*(settings.tax||0)/100;
-  const total=sub+up+rush+tax;
-  return {base,unit,off,qty,locs,extraEls,sub,up,rush,tax,total,deposit:total*(settings.deposit||0)/100,cost:qty*(p.cost||0)};
-}
-
-/* =========================================================
-   Mockup renderer (shared by studio, HQ, proofs)
-   ========================================================= */
-function colorOf(d){const p=P(d.productId);return p?.colors.find(c=>c.id===d.colorId)||p?.colors[0]}
-function mockHTML(d,side,interactive){
-  const p=P(d.productId);
-  if(!p)return '<div class="nomock">Product removed</div>';
-  const c=colorOf(d)||{hex:'#ffffff'};
-  const photo=c[side];
-  const src=photo||p.images[side]||p.images.front;
-  if(!src)return '<div class="nomock">No image</div>';
-  const tint=photo?'':`<div class="tint" style="--m:url('${src}');background:${c.hex}"></div>`;
-  const pa=p.print[side]||p.print.front;
-  const light=isLight(c.hex);
-  const ls=d.layers.filter(l=>l.side===side).map(l=>layerHTML(l,interactive)).join('');
-  return `<img class="base" src="${src}" alt="">${tint}<div class="print ${interactive&&guide?'guide':''} ${light?'darkguide':''}" style="left:${pa[0]}%;top:${pa[1]}%;width:${pa[2]}%;height:${pa[3]}%" data-print>${ls}${interactive&&!ls?`<div class="empty-hint" style="color:${light?'#0007':'#fff8'}">Drop artwork here</div>`:''}</div>`;
-}
-function layerHTML(l,interactive){
-  const st=`left:${l.x}%;top:${l.y}%;width:${l.type==='img'?l.w+'%':'auto'};transform:translate(-50%,-50%) rotate(${l.rot||0}deg)`;
-  const inner=l.type==='img'?`<img src="${l.src}">`:`<div class="txt" style="font-family:'${l.font}',serif;font-size:${l.size}cqw;color:${l.color};letter-spacing:${l.ls||0}em;${l.stroke?`-webkit-text-stroke:${l.size/14}cqw ${l.stroke};paint-order:stroke fill`:''}">${esc(l.text)}</div>`;
-  return `<div class="layer ${interactive&&sel===l.id?'sel':''}" data-id="${l.id}" style="${st}">${inner}${interactive?'<div class="h"></div><div class="r"></div>':''}</div>`;
-}
-const mockBox=(d,side,cls='')=>`<div class="mock ${cls}">${mockHTML(d,side)}</div>`;
-const hasBack=p=>!!(p&&p.images.back);
-
-/* =========================================================
-   Branding
-   ========================================================= */
-function applyBrand(){
-  const r=document.documentElement.style;
-  r.setProperty('--accent',settings.accent);r.setProperty('--accent-ink',isLight(settings.accent)?'#0b0b0d':'#ffffff');
-  $('#brandLogo').src=settings.logo||'';$('#brandLogo').style.display=settings.logo?'':'none';
-  $('#brandName').textContent=settings.logo?'':settings.name;
-  document.title=settings.name+' Studio';
-}
-
-/* =========================================================
-   STUDIO (customer side)
-   ========================================================= */
-const INK=['#ffffff','#111111','#c8102e','#1f3a93','#d4af37','#2e7d32','#6b1f2a','#7fb2e0','#f1b8c8','#5a2d82'];
-const FONTS=[['Graduate','Varsity'],['Oswald','Block'],['Playfair Display','Serif'],['Noto Serif','Greek'],['Bebas Neue','Condensed'],['Permanent Marker','Marker']];
-const GREEK='Α Β Γ Δ Ε Ζ Η Θ Ι Κ Λ Μ Ν Ξ Ο Π Ρ Σ Τ Υ Φ Χ Ψ Ω'.split(' ');
-const ORGS=['ΑΣΦ','ΧΦ','ΣΧ','ΦΔΘ','ΚΣ','ΣΑΕ','ΠΚΑ','ΘΧ','ΔΤΔ','ΣΝ','ΚΑ','ΦΚΨ','ΑΤΩ','ΒΘΠ','ΚΔ','ΑΧΩ','ΔΓ','ΧΩ','ΑΦ','ΚΚΓ'];
-const QUICK=['FALL RUSH','BID DAY','PARENTS WEEKEND','FORMAL 2026','PHILANTHROPY','EST. 1909','BROTHERHOOD','SISTERHOOD'];
-
-function freshDesign(){const p=activeProducts()[0]||products[0];return{productId:p?.id,colorId:p?.colors[0]?.id,layers:[]}}
-let design=store.get('draft',null)||freshDesign();
-if(!P(design.productId)||!P(design.productId).active)design=freshDesign();
-let side='front', sel=null, guide=true, hist=[], font='Graduate', lib=store.get('lib',[]), editingOrder=null;
-
-function renderStudio(){
-  const p=P(design.productId);
-  if(!p||!hasBack(p))side='front';
-  $('#stageMock').innerHTML=mockHTML(design,side,true);
-  bindPrint();renderLayers();renderProps();renderPrice();
-  $('#sideBtns').innerHTML=['front','back'].filter(s=>s==='front'||hasBack(p)).map(s=>`<button class="${s===side?'on':''}" data-side="${s}">${s[0].toUpperCase()+s.slice(1)}</button>`).join('');
-  $$('#sideBtns button').forEach(b=>b.onclick=()=>{side=b.dataset.side;sel=null;renderStudio()});
-  const n=design.layers.length;
-  $('#status').textContent=n?`${n} element${n>1?'s':''}`:'';
-  $('#prodName').textContent=p?.name||'';
-  store.set('draft',design);
-}
-function renderCatalog(){
-  const list=activeProducts();
-  $('#pcards').innerHTML=list.length?list.map(p=>`<button class="pcard ${p.id===design.productId?'on':''}" data-p="${p.id}">${mockBox({productId:p.id,colorId:p.id===design.productId?design.colorId:p.colors[0]?.id,layers:[]},'front')}<b>${esc(p.name)}</b><span>from ${money(p.price*(1-Math.max(0,...settings.tiers.map(t=>t.off))/100))}</span></button>`).join(''):'<p class="hint">No products available yet.</p>';
-  $$('#pcards .pcard').forEach(b=>b.onclick=()=>{const np=P(b.dataset.p);commit();design.productId=np.id;if(!np.colors.find(c=>c.id===design.colorId))design.colorId=np.colors[0]?.id;renderCatalog();renderStudio()});
-  const p=P(design.productId);
-  $('#colors').innerHTML=(p?.colors||[]).map(c=>`<div class="sw ${c.id===design.colorId?'on':''}" style="background:${c.hex}" data-c="${c.id}" title="${esc(c.name)}"></div>`).join('');
-  $('#colorName').textContent=colorOf(design)?.name||'';
-  $$('#colors .sw').forEach(s=>s.onclick=()=>{design.colorId=s.dataset.c;renderCatalog();renderStudio()});
-  $('#prodInfo').innerHTML=p?`Sizes ${p.sizes.join(', ')} · Minimum ${p.minQty} pcs<br>Turnaround: ${esc(settings.turnaround)}`:'';
-}
-function commit(){hist.push(JSON.stringify(design));if(hist.length>60)hist.shift()}
-
-/* drag/drop + layer manipulation */
-function bindPrint(){
-  const pa=$('#stageMock [data-print]'); if(!pa)return;
-  pa.addEventListener('dragover',e=>{e.preventDefault();pa.classList.add('over')});
-  pa.addEventListener('dragleave',()=>pa.classList.remove('over'));
-  pa.addEventListener('drop',e=>{
-    e.preventDefault();pa.classList.remove('over');
-    const r=pa.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*100,y=(e.clientY-r.top)/r.height*100;
-    const libId=e.dataTransfer.getData('text/lib');
-    if(libId){const it=lib.find(i=>i.id===libId);if(it)addImage(it.src,x,y);return}
-    [...e.dataTransfer.files].filter(f=>f.type.startsWith('image/')).forEach(f=>readImg(f,{max:1400}).then(src=>{addToLib(src,f.name);addImage(src,x,y)}));
-  });
-  pa.addEventListener('pointerdown',e=>{if(e.target===pa||e.target.classList.contains('empty-hint')){sel=null;renderStudio()}});
-  pa.querySelectorAll('.layer').forEach(el=>el.addEventListener('pointerdown',e=>{
-    e.stopPropagation();
-    const l=design.layers.find(x=>x.id===el.dataset.id);if(!l)return;
-    if(sel!==l.id){sel=l.id;renderStudio();return startDrag(e,$(`#stageMock .layer[data-id="${l.id}"]`),l)}
-    startDrag(e,el,l);
-  }));
-}
-function startDrag(e,el,l){
-  const r=$('#stageMock [data-print]').getBoundingClientRect();
-  const mode=e.target.classList.contains('h')?'resize':e.target.classList.contains('r')?'rotate':'move';
-  commit();
-  const sx=e.clientX,sy=e.clientY,o={...l},er=el.getBoundingClientRect(),cx=er.left+er.width/2,cy=er.top+er.height/2,d0=Math.hypot(sx-cx,sy-cy)||1;
-  const mv=ev=>{
-    if(mode==='move'){l.x=clamp(o.x+(ev.clientX-sx)/r.width*100,-10,110);l.y=clamp(o.y+(ev.clientY-sy)/r.height*100,-10,110)}
-    else if(mode==='resize'){const k=Math.hypot(ev.clientX-cx,ev.clientY-cy)/d0;if(l.type==='img')l.w=clamp(o.w*k,5,140);else l.size=clamp(o.size*k,2,60)}
-    else{let a=Math.atan2(ev.clientY-cy,ev.clientX-cx)*180/Math.PI+90;if(Math.abs(a%45)<4||Math.abs(a%45)>41)a=Math.round(a/45)*45;l.rot=Math.round(a)}
-    el.style.left=l.x+'%';el.style.top=l.y+'%';el.style.transform=`translate(-50%,-50%) rotate(${l.rot||0}deg)`;
-    if(l.type==='img')el.style.width=l.w+'%';else el.firstChild.style.fontSize=l.size+'cqw';
-  };
-  const up=()=>{removeEventListener('pointermove',mv);removeEventListener('pointerup',up);renderStudio()};
-  addEventListener('pointermove',mv);addEventListener('pointerup',up);
-}
-
-/* image reading: downscale, optional white-background removal */
-function readImg(f,{max=1400,removeBg=false}={}){
-  return new Promise(res=>{
-    const fr=new FileReader();
-    fr.onload=()=>{
-      if(f.type==='image/svg+xml'&&!removeBg)return res(fr.result);
-      const im=new Image();im.onload=()=>{
-        const s=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);
-        const x=c.getContext('2d');x.drawImage(im,0,0,c.width,c.height);
-        if(removeBg)knockOutBg(x,c.width,c.height);
-        res(c.toDataURL('image/webp',.88));
-      };im.src=fr.result;
-    };fr.readAsDataURL(f);
-  });
-}
-function knockOutBg(ctx,w,h,thr=30){
-  const id=ctx.getImageData(0,0,w,h),d=id.data,seen=new Uint8Array(w*h),st=[];
-  const bg=[d[0],d[1],d[2]];
-  const near=i=>Math.abs(d[i]-bg[0])<thr&&Math.abs(d[i+1]-bg[1])<thr&&Math.abs(d[i+2]-bg[2])<thr;
-  for(let x=0;x<w;x++){st.push(x,(h-1)*w+x)}for(let y=0;y<h;y++){st.push(y*w,y*w+w-1)}
-  while(st.length){const p=st.pop();if(seen[p])continue;seen[p]=1;const i=p*4;if(!near(i))continue;d[i+3]=0;const x=p%w,y=(p/w)|0;
-    if(x>0)st.push(p-1);if(x<w-1)st.push(p+1);if(y>0)st.push(p-w);if(y<h-1)st.push(p+w)}
-  ctx.putImageData(id,0,0);
-}
-function addToLib(src,name){lib.unshift({id:uid(),src,name});lib=lib.slice(0,16);store.set('lib',lib);renderLib()}
-function addImage(src,x=50,y=40){commit();const l={id:uid(),type:'img',src,x,y,w:70,rot:0,side};design.layers.push(l);sel=l.id;renderStudio()}
-function addText(text,f=font,extra={}){if(!text.trim())return;commit();const light=isLight(colorOf(design)?.hex);const l={id:uid(),type:'text',text,font:f,size:text.length>10?9:16,color:light?'#111111':'#ffffff',x:50,y:30,rot:0,ls:.04,side,...extra};design.layers.push(l);sel=l.id;renderStudio()}
-
-function renderLib(){
-  $('#lib').innerHTML=lib.length?lib.map(i=>`<div class="tile checker" draggable="true" data-id="${i.id}" title="${esc(i.name)}"><img src="${i.src}"><button class="x" data-del="${i.id}">✕</button></div>`).join(''):'<p class="hint" style="grid-column:span 2">Uploads land here. Drag them onto the product or click to add.</p>';
-  $$('#lib .tile').forEach(t=>{
-    t.addEventListener('dragstart',e=>e.dataTransfer.setData('text/lib',t.dataset.id));
-    t.addEventListener('click',e=>{if(e.target.dataset.del){lib=lib.filter(i=>i.id!==e.target.dataset.del);store.set('lib',lib);renderLib();return}addImage(lib.find(i=>i.id===t.dataset.id).src)});
-  });
-}
-const drop=$('#drop');
-['dragover','dragenter'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('over')}));
-['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,()=>drop.classList.remove('over')));
-drop.addEventListener('drop',e=>{e.preventDefault();[...e.dataTransfer.files].filter(f=>f.type.startsWith('image/')).forEach((f,i)=>readImg(f).then(src=>{addToLib(src,f.name);if(i===0)addImage(src)}))});
-$('#file').addEventListener('change',e=>{[...e.target.files].forEach((f,i)=>readImg(f).then(src=>{addToLib(src,f.name);if(i===0)addImage(src)}));e.target.value=''});
-
-$('#fontList').innerHTML=FONTS.map(([f,n])=>`<button data-f="${f}" style="font-family:'${f}'">${n}</button>`).join('');
-$$('#fontList button').forEach(b=>b.onclick=()=>{font=b.dataset.f;$$('#fontList button').forEach(x=>x.classList.toggle('on',x===b));const l=cur();if(l&&l.type==='text'){commit();l.font=font;renderStudio()}});
-$('#fontList button').classList.add('on');
-$('#addText').onclick=()=>addText($('#textIn').value);
-$('#textIn').onkeydown=e=>{if(e.key==='Enter')addText(e.target.value)};
-$('#quickText').innerHTML=QUICK.map(q=>`<button class="chip plain">${q}</button>`).join('');
-$$('#quickText .chip').forEach(c=>c.onclick=()=>addText(c.textContent));
-$('#greekGrid').innerHTML=GREEK.map(g=>`<button>${g}</button>`).join('');
-$$('#greekGrid button').forEach(b=>b.onclick=()=>{$('#greekIn').value+=b.textContent});
-$('#greekClr').onclick=()=>$('#greekIn').value='';
-$('#addGreek').onclick=()=>addText($('#greekIn').value,'Noto Serif',{size:24,ls:.08});
-$('#orgs').innerHTML=ORGS.map(o=>`<button class="chip">${o}</button>`).join('');
-$$('#orgs .chip').forEach(c=>c.onclick=()=>addText(c.textContent,'Noto Serif',{size:24,ls:.08}));
-$$('#client .rail button[data-pane]').forEach(b=>b.onclick=()=>{$$('#client .rail button[data-pane]').forEach(x=>x.classList.toggle('on',x===b));$$('.pane').forEach(p=>p.classList.toggle('on',p.id==='pane-'+b.dataset.pane))});
-
-const cur=()=>design.layers.find(l=>l.id===sel);
-function renderLayers(){
-  const ls=design.layers.filter(l=>l.side===side);
-  $('#layerList').innerHTML=ls.length?ls.slice().reverse().map(l=>`<div class="li ${sel===l.id?'on':''}" data-id="${l.id}"><div class="th">${l.type==='img'?`<img src="${l.src}">`:esc(l.text.slice(0,3))}</div><span>${l.type==='img'?'Artwork':esc(l.text)}</span><button data-del="${l.id}" class="muted">✕</button></div>`).join(''):`<p class="hint">Nothing on the ${side} yet.</p>`;
-  $$('#layerList .li').forEach(li=>li.onclick=e=>{if(e.target.dataset.del){commit();design.layers=design.layers.filter(l=>l.id!==e.target.dataset.del);sel=null}else sel=li.dataset.id;renderStudio()});
-}
-function renderProps(){
-  const l=cur(),box=$('#propBox');
-  if(!l){box.innerHTML='<p class="hint">Select an element to edit it. Drag to move, corner to resize, top dot to rotate.</p>';return}
-  let h='';
-  if(l.type==='text'){
-    h+=`<h3 class="sec">Text</h3><div class="field"><input id="pText" value="${esc(l.text)}"></div>
-    <div class="field"><label>Color</label><div class="swatches">${INK.map(c=>`<div class="sw ${l.color===c?'on':''}" data-ink="${c}" style="background:${c};width:24px;height:24px"></div>`).join('')}</div></div>
-    <div class="field"><label>Outline</label><div class="swatches"><div class="sw ${!l.stroke?'on':''}" data-st="" style="width:24px;height:24px;background:linear-gradient(135deg,transparent 45%,#e44 45% 55%,transparent 55%)"></div>${INK.slice(0,6).map(c=>`<div class="sw ${l.stroke===c?'on':''}" data-st="${c}" style="background:${c};width:24px;height:24px"></div>`).join('')}</div></div>
-    <div class="field"><label>Size</label><input type="range" min="2" max="60" step=".5" value="${l.size}" id="pSize"></div>
-    <div class="field"><label>Letter spacing</label><input type="range" min="-.05" max=".5" step=".01" value="${l.ls||0}" id="pLs"></div>`;
-  }else h+=`<h3 class="sec">Artwork</h3><div class="field"><label>Width</label><input type="range" min="5" max="140" value="${l.w}" id="pW"></div>`;
-  h+=`<div class="field"><label>Rotation · ${l.rot||0}°</label><input type="range" min="-180" max="180" value="${l.rot||0}" id="pRot"></div>
-  <div class="row" style="flex-wrap:wrap"><button class="btn sm" id="pDup">Duplicate</button><button class="btn sm" id="pFront">Bring forward</button><button class="btn sm bad" id="pDel">Delete</button></div>`;
-  box.innerHTML=h;
-  const live=(id,fn)=>{const el=$(id);if(!el)return;el.onpointerdown=commit;el.oninput=e=>{fn(e.target.value);$('#stageMock').innerHTML=mockHTML(design,side,true);bindPrint();renderLayers()}};
-  live('#pText',v=>l.text=v);$('#pText')?.addEventListener('focus',commit);
-  live('#pSize',v=>l.size=+v);live('#pLs',v=>l.ls=+v);live('#pW',v=>l.w=+v);live('#pRot',v=>l.rot=+v);
-  $$('[data-ink]').forEach(s=>s.onclick=()=>{commit();l.color=s.dataset.ink;renderStudio()});
-  $$('[data-st]').forEach(s=>s.onclick=()=>{commit();l.stroke=s.dataset.st;renderStudio()});
-  $('#pDel').onclick=()=>{commit();design.layers=design.layers.filter(x=>x.id!==l.id);sel=null;renderStudio()};
-  $('#pDup').onclick=()=>{commit();const c={...l,id:uid(),x:l.x+4,y:l.y+4};design.layers.push(c);sel=c.id;renderStudio()};
-  $('#pFront').onclick=()=>{commit();design.layers.splice(design.layers.indexOf(l),1);design.layers.push(l);renderStudio()};
-}
-function renderPrice(){
-  const p=P(design.productId);if(!p)return;
-  const q=quote(design,{M:p.minQty});
-  $('#unitPrice').textContent=money(q.base);
-  $('#priceNote').textContent=`${p.name} · ${q.locs} print location${q.locs===1?'':'s'}${q.extraEls?` · ${q.extraEls} extra element${q.extraEls>1?'s':''}`:''}`;
-  const tiers=settings.tiers.slice().sort((a,b)=>a.min-b.min).filter(t=>t.off>0);
-  $('#tierTable').innerHTML=tiers.length?`<tr><td class="muted">Quantity</td><td class="muted">Each</td></tr>`+tiers.map(t=>`<tr><td>${t.min}+ pcs</td><td>${money(q.base*(1-t.off/100))}</td></tr>`).join(''):'';
-}
-
-$('#undo').onclick=()=>{const p=hist.pop();if(p){design=JSON.parse(p);sel=null;renderCatalog();renderStudio()}};
-$('#guideBtn').onclick=()=>{guide=!guide;renderStudio()};
-$('#centerBtn').onclick=()=>{const l=cur();if(l){commit();l.x=50;renderStudio()}};
-$('#clearBtn').onclick=()=>{if(!design.layers.length)return;commit();design.layers=[];sel=null;editingOrder=null;renderStudio();toast('Cleared — undo to bring it back')};
-addEventListener('keydown',e=>{
-  if(!$('#client').classList.contains('on')||['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName))return;
-  const l=cur();
-  if((e.key==='Delete'||e.key==='Backspace')&&l){commit();design.layers=design.layers.filter(x=>x!==l);sel=null;renderStudio()}
-  if((e.metaKey||e.ctrlKey)&&e.key==='z'){e.preventDefault();$('#undo').click()}
-  if(l&&e.key.startsWith('Arrow')){e.preventDefault();const s=e.shiftKey?2:.5;if(e.key==='ArrowLeft')l.x-=s;if(e.key==='ArrowRight')l.x+=s;if(e.key==='ArrowUp')l.y-=s;if(e.key==='ArrowDown')l.y+=s;renderStudio()}
-});
-
-/* order submit */
-function setStep(n){$$('.step').forEach((s,i)=>{s.classList.toggle('done',i<n);s.classList.toggle('on',i===n);s.querySelector('i').textContent=i<n?'✓':i+1})}
-const readSizes=()=>{const o={};$$('[data-size]').forEach(i=>{if(+i.value>0)o[i.dataset.size]=+i.value});return o};
-function breakdownHTML(q,p){
-  return `<div class="l"><span>${q.qty} pcs × ${money(q.unit)}${q.off?` <span class="muted">(${q.off}% volume discount)</span>`:''}</span><span>${money(q.sub)}</span></div>
-  ${q.up?`<div class="l"><span>Size upcharges</span><span>${money(q.up)}</span></div>`:''}
-  ${q.rush?`<div class="l"><span>Rush fee (${settings.rush}%)</span><span>${money(q.rush)}</span></div>`:''}
-  ${q.tax?`<div class="l"><span>Tax (${settings.tax}%)</span><span>${money(q.tax)}</span></div>`:''}
-  <div class="l t"><span>Estimated total</span><span>${money(q.total)}</span></div>
-  ${settings.deposit?`<div class="l muted"><span>Deposit due after approval (${settings.deposit}%)</span><span>${money(q.deposit)}</span></div>`:''}
-  ${p&&q.qty<p.minQty?`<div class="l" style="color:var(--bad)"><span>Minimum order is ${p.minQty} pieces</span></div>`:''}`;
-}
-function updOrderModal(){const p=P(design.productId),q=quote(design,readSizes(),$('#oDate').value);$('#omBreak').innerHTML=breakdownHTML(q,p);$('#mSubmit').disabled=q.qty<p.minQty}
-$('#nextBtn').onclick=()=>{
-  if(!design.layers.length)return toast('Add a design first');
-  const p=P(design.productId),prev=editingOrder&&orders.find(o=>o.id===editingOrder);
-  $('#sizeIn').innerHTML=p.sizes.map(s=>`<div><label>${s}${p.upcharge?.[s]?` +$${p.upcharge[s]}`:''}</label><input type="number" min="0" value="${prev?.sizes?.[s]??(s==='M'||s==='L'?Math.ceil(p.minQty/2):0)}" data-size="${s}"></div>`).join('');
-  $$('[data-size]').forEach(i=>i.oninput=updOrderModal);
-  if(prev){['org','name','email','phone'].forEach(k=>$('#o'+k[0].toUpperCase()+k.slice(1)).value=prev.customer[k]||'');$('#oTitle').value=prev.title;$('#oDate').value=prev.due||''}
-  $('#omSub').textContent=prev?`Resubmitting ${prev.id} with your changes.`:'Tell us who it\'s for and how many. We review every design before anything prints.';
-  setStep(2);updOrderModal();$('#orderModal').classList.add('on');
-};
-$('#oDate').oninput=updOrderModal;
-$('#mCancel').onclick=()=>{setStep(1);$('#orderModal').classList.remove('on')};
-$('#mSubmit').onclick=()=>{
-  const sizes=readSizes(),q=quote(design,sizes,$('#oDate').value),p=P(design.productId);
-  const email=$('#oEmail').value.trim();
-  if(!$('#oOrg').value.trim()||!email)return toast('Add your organization and email');
-  if(q.qty<p.minQty)return toast(`Minimum order is ${p.minQty} pieces`);
-  const now=Date.now();
-  const o={id:'#'+settings.nextOrder++,customer:{org:$('#oOrg').value.trim(),name:$('#oName').value.trim(),email,phone:$('#oPhone').value.trim()},
-    title:$('#oTitle').value.trim()||'Untitled design',due:$('#oDate').value,notes:$('#oNotes').value.trim(),sizes,qty:q.qty,total:q.total,unit:q.unit,cost:q.cost,
-    productName:p.name,colorName:colorOf(design)?.name,design:JSON.parse(JSON.stringify(design)),status:'Pending',paid:false,at:now,
-    revisionOf:editingOrder||null,history:[{at:now,text:editingOrder?`Resubmitted (revision of ${editingOrder})`:'Order submitted'}]};
-  orders.unshift(o);
-  if(!saveOrders()){orders.shift();settings.nextOrder--;return}
-  saveSettings();
-  localStorage.setItem(NS+'myEmail',email);
-  setStep(3);$('#orderModal').classList.remove('on');editingOrder=null;
-  toast(`Order ${o.id} submitted — you'll hear back once it's reviewed`);
-  setTimeout(()=>setStep(1),2500);renderAdmin();
-};
-
-/* my orders */
-$('#myOrdersBtn').onclick=()=>{$('#myEmail').value=localStorage.getItem(NS+'myEmail')||'';$('#myModal').classList.add('on');renderMy()};
-$('#myClose').onclick=()=>$('#myModal').classList.remove('on');
-$('#myGo').onclick=renderMy;
-function renderMy(){
-  const em=$('#myEmail').value.trim().toLowerCase();
-  if(!em){$('#myList').innerHTML='';return}
-  const mine=orders.filter(o=>o.customer.email.toLowerCase()===em);
-  $('#myList').innerHTML=mine.length?mine.map(o=>`
-    <div class="box" style="display:flex;gap:14px;align-items:flex-start">
-      <div class="thumb" style="width:80px;height:80px">${mockBox(o.design,'front')}</div>
-      <div class="grow">
-        <div class="row" style="justify-content:space-between"><b>${esc(o.title)} <span class="muted">${o.id}</span></b><span class="badge ${o.status}">${SLABEL[o.status]}</span></div>
-        <div class="muted" style="font-size:12px;margin:4px 0">${esc(o.productName)} · ${esc(o.colorName||'')} · ${o.qty} pcs · ${money(o.total)} · ${fmtDate(o.at)}</div>
-        ${o.status==='Declined'?`<div class="notice" style="margin:6px 0"><b>Why it was declined:</b> ${esc(o.declineReason||'')}</div>`:''}
-        ${o.message?`<div class="hint" style="color:var(--text)">Message from ${esc(settings.name)}: ${esc(o.message)}</div>`:''}
-        <div class="row" style="margin-top:8px">${o.status==='Declined'?`<button class="btn sm primary" data-fix="${o.id}">Edit & resubmit</button>`:''}<button class="btn sm" data-re="${o.id}">Reorder this design</button></div>
-      </div>
-    </div>`).join(''):'<p class="muted">No orders found for that email.</p>';
-  $$('[data-fix],[data-re]').forEach(b=>b.onclick=()=>{const o=orders.find(x=>x.id===(b.dataset.fix||b.dataset.re));if(!P(o.design.productId))return toast('That product is no longer offered');design=JSON.parse(JSON.stringify(o.design));editingOrder=b.dataset.fix||null;sel=null;side='front';$('#myModal').classList.remove('on');renderCatalog();renderStudio();toast(b.dataset.fix?'Make your changes, then continue to resubmit':'Design loaded')});
-}
-
-/* =========================================================
-   BUSINESS HQ
-   ========================================================= */
-let apane='dash', ofilter='All', osearch='';
-function renderAdmin(){
-  const pend=orders.filter(o=>o.status==='Pending').length;
-  $('#pendCount').hidden=!pend;$('#pendCount').textContent=pend;
-  ({dash:renderDash,orders:renderOrders,products:renderProducts,pricing:renderPricing,customers:renderCustomers,settings:renderSettings})[apane]();
-}
-$$('#adminRail button').forEach(b=>b.onclick=()=>{apane=b.dataset.apane;$$('#adminRail button').forEach(x=>x.classList.toggle('on',x===b));$$('.apane').forEach(p=>p.classList.toggle('on',p.id==='ap-'+apane));renderAdmin()});
-const live=o=>!['Declined'].includes(o.status);
-
-function renderDash(){
-  $('#dashTitle').textContent=settings.name;
-  const lv=orders.filter(o=>live(o)&&o.status!=='Pending');
-  const rev=lv.reduce((a,o)=>a+o.total,0),cost=lv.reduce((a,o)=>a+(o.cost||0),0);
-  const open=orders.filter(o=>['Approved','Production','Ready'].includes(o.status));
-  const unpaid=lv.filter(o=>!o.paid&&o.status!=='Pending').reduce((a,o)=>a+o.total,0);
-  $('#dashStats').innerHTML=[['Needs review',orders.filter(o=>o.status==='Pending').length],['In progress',open.length],['Approved revenue',money0(rev)],['Est. profit',money0(rev-cost)],['Unpaid balance',money0(unpaid)],['Pieces approved',lv.reduce((a,o)=>a+o.qty,0)]]
-    .map(([k,v])=>`<div class="stat"><div class="muted">${k}</div><div class="n">${v}</div></div>`).join('');
-  const rv=orders.filter(o=>o.status==='Pending');
-  $('#reviewList').innerHTML=rv.length?rv.map(o=>`
-    <div class="row" style="padding:10px 0;border-bottom:1px solid var(--line)">
-      <div class="thumb">${mockBox(o.design,'front')}</div>
-      <div class="grow" style="cursor:pointer" data-open="${o.id}"><b>${esc(o.customer.org)}</b><div class="muted" style="font-size:12px">${o.id} · ${esc(o.title)} · ${o.qty} pcs · ${money0(o.total)}${o.due?` · due ${o.due}`:''}</div></div>
-      <button class="btn sm ok" data-approve="${o.id}">Approve</button><button class="btn sm bad" data-decline="${o.id}">Decline</button>
-    </div>`).join(''):'<p class="muted">You\'re all caught up. New orders appear here for approval.</p>';
-  const by={};lv.forEach(o=>by[o.productName]=(by[o.productName]||0)+o.total);
-  const mx=Math.max(1,...Object.values(by));
-  $('#revBars').innerHTML=Object.keys(by).length?Object.entries(by).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="b"><span style="width:130px">${esc(k)}</span><div class="tr"><i style="width:${v/mx*100}%"></i></div><b style="width:70px;text-align:right">${money0(v)}</b></div>`).join(''):'<p class="muted">No approved orders yet.</p>';
-  const cnt=STATUSES.map(s=>[s,orders.filter(o=>o.status===s).length]),mc=Math.max(1,...cnt.map(c=>c[1]));
-  $('#pipeBars').innerHTML=cnt.map(([s,n])=>`<div class="b"><span style="width:130px">${SLABEL[s]}</span><div class="tr"><i style="width:${n/mc*100}%"></i></div><b style="width:70px;text-align:right">${n}</b></div>`).join('');
-  bindOrderActions($('#ap-dash'));
-}
-
-function filteredOrders(){
-  const q=osearch.toLowerCase();
-  return orders.filter(o=>(ofilter==='All'||o.status===ofilter||(ofilter==='Unpaid'&&!o.paid&&live(o)&&o.status!=='Pending'))&&(!q||[o.id,o.title,o.customer.org,o.customer.name,o.customer.email,o.productName].join(' ').toLowerCase().includes(q)));
-}
-function renderOrders(){
-  $('#filterTabs').innerHTML=['All',...STATUSES,'Unpaid'].map(s=>{const n=s==='All'?orders.length:s==='Unpaid'?orders.filter(o=>!o.paid&&live(o)&&o.status!=='Pending').length:orders.filter(o=>o.status===s).length;return`<button class="${ofilter===s?'on':''}" data-f="${s}">${SLABEL[s]||s} (${n})</button>`}).join('');
-  $$('#filterTabs button').forEach(b=>b.onclick=()=>{ofilter=b.dataset.f;renderOrders()});
-  const list=filteredOrders();
-  $('#orderTable').innerHTML=list.length?`<tr><th></th><th>Order</th><th>Customer</th><th>Product</th><th>Qty</th><th>Total</th><th>Due</th><th>Status</th><th>Payment</th><th></th></tr>`+list.map(o=>`
-    <tr class="click" data-open="${o.id}">
-      <td><div class="thumb">${mockBox(o.design,'front')}</div></td>
-      <td><b>${o.id}</b><div class="muted" style="font-size:12px">${esc(o.title)}</div></td>
-      <td>${esc(o.customer.org)}<div class="muted" style="font-size:12px">${esc(o.customer.name||o.customer.email)}</div></td>
-      <td>${esc(o.productName)}<div class="muted" style="font-size:12px">${esc(o.colorName||'')}</div></td>
-      <td>${o.qty}</td><td>${money0(o.total)}</td><td>${o.due||'—'}</td>
-      <td><span class="badge ${o.status}">${SLABEL[o.status]}</span></td>
-      <td>${o.status==='Pending'||o.status==='Declined'?'—':`<span class="badge ${o.paid?'paid':'unpaid'}">${o.paid?'Paid':'Unpaid'}</span>`}</td>
-      <td style="white-space:nowrap">${o.status==='Pending'?`<button class="btn sm ok" data-approve="${o.id}">Approve</button> <button class="btn sm bad" data-decline="${o.id}">Decline</button>`:NEXT[o.status]?`<button class="btn sm" data-next="${o.id}">${NEXT_LABEL[o.status]}</button>`:''}</td>
-    </tr>`).join(''):`<tr><td style="padding:40px;text-align:center" class="muted">No orders match. Share your customer link, or load demo orders from the dashboard.</td></tr>`;
-  bindOrderActions($('#orderTable'));
-}
-$('#orderSearch').oninput=e=>{osearch=e.target.value;renderOrders()};
-
-function bindOrderActions(root){
-  root.querySelectorAll('[data-approve]').forEach(b=>b.onclick=e=>{e.stopPropagation();decide(b.dataset.approve,'approve')});
-  root.querySelectorAll('[data-decline]').forEach(b=>b.onclick=e=>{e.stopPropagation();decide(b.dataset.decline,'decline')});
-  root.querySelectorAll('[data-next]').forEach(b=>b.onclick=e=>{e.stopPropagation();const o=orders.find(x=>x.id===b.dataset.next);setStatus(o,NEXT[o.status])});
-  root.querySelectorAll('[data-open]').forEach(r=>r.onclick=()=>openOrder(r.dataset.open));
-}
-function setStatus(o,s,note){o.status=s;o.history.push({at:Date.now(),text:`${SLABEL[s]}${note?` — ${note}`:''}`});saveOrders();renderAdmin();if(drawerId===o.id)openOrder(o.id);toast(`${o.id} → ${SLABEL[s]}`)}
-
-function decide(id,kind){
-  const o=orders.find(x=>x.id===id),c=$('#decideCard');
-  if(kind==='approve'){
-    c.innerHTML=`<h2>Approve ${o.id}</h2><p class="muted" style="margin-bottom:14px">${esc(o.customer.org)} · ${o.qty} pcs · ${money(o.total)}${settings.deposit?` · ${settings.deposit}% deposit = ${money(o.total*settings.deposit/100)}`:''}</p>
-      <div class="pvpair" style="margin-bottom:14px">${mockBox(o.design,'front')}${hasBack(P(o.design.productId))?mockBox(o.design,'back'):''}</div>
-      <div class="field"><label>Message to customer (optional)</label><textarea id="dMsg" rows="3" placeholder="Looks great! We'll send a deposit invoice today."></textarea></div>
-      <div class="row" style="justify-content:flex-end"><button class="btn" id="dCancel">Cancel</button><button class="btn ok" id="dGo">Approve order</button></div>`;
-  }else{
-    c.innerHTML=`<h2>Decline ${o.id}</h2><p class="muted" style="margin-bottom:14px">The customer sees this reason and can edit and resubmit.</p>
-      <div class="chips" style="margin-bottom:12px">${DECLINE_REASONS.map(r=>`<button class="chip plain" data-r="${esc(r)}">${esc(r)}</button>`).join('')}</div>
-      <div class="field"><label>Reason (required)</label><textarea id="dMsg" rows="3"></textarea></div>
-      <div class="row" style="justify-content:flex-end"><button class="btn" id="dCancel">Cancel</button><button class="btn bad" id="dGo">Decline order</button></div>`;
-    c.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{$('#dMsg').value=b.dataset.r});
-  }
-  $('#decideModal').classList.add('on');
-  $('#dCancel').onclick=()=>$('#decideModal').classList.remove('on');
-  $('#dGo').onclick=()=>{
-    const msg=$('#dMsg').value.trim();
-    if(kind==='decline'&&!msg)return toast('Add a reason so the customer knows what to fix');
-    if(kind==='decline'){o.declineReason=msg;setStatus(o,'Declined',msg)}else{if(msg)o.message=msg;setStatus(o,'Approved',msg)}
-    $('#decideModal').classList.remove('on');
-  };
-}
-
-/* order drawer */
-let drawerId=null;
-function openOrder(id){
-  const o=orders.find(x=>x.id===id);if(!o)return;drawerId=id;
-  const p=P(o.design.productId);
-  $('#dHead').innerHTML=`<div class="grow"><b style="font-size:17px">${o.id} · ${esc(o.title)}</b><div class="muted" style="font-size:12px">Submitted ${fmtDT(o.at)}${o.revisionOf?` · revision of ${o.revisionOf}`:''}</div></div><span class="badge ${o.status}">${SLABEL[o.status]}</span><button class="btn sm" id="dClose">✕</button>`;
-  const q=quote(o.design,o.sizes,o.due);
-  $('#dBody').innerHTML=`
-    <div class="pvpair" style="margin-bottom:16px">${mockBox(o.design,'front')}${hasBack(p)?mockBox(o.design,'back'):''}</div>
-    ${o.status==='Declined'?`<div class="notice" style="margin-bottom:14px"><b>Declined:</b> ${esc(o.declineReason)}</div>`:''}
-    <div class="grid2" style="grid-template-columns:1fr 1fr">
-      <div><h3 class="sec">Customer</h3><b>${esc(o.customer.org)}</b><div class="muted">${esc(o.customer.name)}<br><a href="mailto:${esc(o.customer.email)}" style="color:var(--info)">${esc(o.customer.email)}</a>${o.customer.phone?`<br>${esc(o.customer.phone)}`:''}</div></div>
-      <div><h3 class="sec">Product</h3><b>${esc(o.productName)}</b><div class="muted">${esc(o.colorName||'')} · ${o.design.layers.length} design elements<br>${o.due?`Need by <b style="color:var(--text)">${o.due}</b>`:'No deadline given'}</div></div>
-    </div>
-    <h3 class="sec">Sizes</h3><div class="chips">${Object.entries(o.sizes).map(([k,v])=>`<span class="chip plain">${k} × ${v}</span>`).join('')}</div>
-    ${o.notes?`<h3 class="sec">Customer notes</h3><p>${esc(o.notes)}</p>`:''}
-    <h3 class="sec">Price</h3><div class="breakdown">${breakdownHTML({...q,total:o.total,unit:o.unit,qty:o.qty,deposit:o.total*(settings.deposit||0)/100},null)}
-      <div class="l muted"><span>Est. blank cost</span><span>${money(o.cost||0)}</span></div><div class="l"><span>Est. profit</span><span>${money(o.total-(o.cost||0))}</span></div></div>
-    <h3 class="sec">Payment</h3><label class="row" style="cursor:pointer"><span class="switch"><input type="checkbox" id="dPaid" ${o.paid?'checked':''}><span></span></span>${o.paid?'Paid in full':'Not marked as paid'}</label>
-    <h3 class="sec">Message to customer</h3><div class="row"><input id="dMessage" value="${esc(o.message||'')}" placeholder="Shown in their “My orders” page"><button class="btn sm" id="dSaveMsg">Save</button></div>
-    <h3 class="sec">Internal note</h3><textarea id="dNote" rows="2" placeholder="Only your team sees this">${esc(o.note||'')}</textarea>
-    <h3 class="sec">History</h3><div class="timeline">${o.history.slice().reverse().map(h=>`<div>${esc(h.text)}<small>${fmtDT(h.at)}</small></div>`).join('')}</div>`;
-  $('#dFoot').innerHTML=`${o.status==='Pending'?`<button class="btn ok" data-approve="${o.id}">Approve</button><button class="btn bad" data-decline="${o.id}">Decline</button>`:''}
-    ${NEXT[o.status]?`<button class="btn primary" data-next="${o.id}">${NEXT_LABEL[o.status]}</button>`:''}
-    <select id="dStatus" style="width:auto">${STATUSES.map(s=>`<option value="${s}" ${s===o.status?'selected':''}>${SLABEL[s]}</option>`).join('')}</select>
-    <div class="grow"></div><button class="btn" id="dProof">Print proof</button><button class="btn" id="dEdit">Open in studio</button><button class="btn bad" id="dDel">Delete</button>`;
-  bindOrderActions($('#dFoot'));
-  $('#dClose').onclick=closeDrawer;
-  $('#dPaid').onchange=e=>{o.paid=e.target.checked;o.history.push({at:Date.now(),text:o.paid?'Marked paid':'Marked unpaid'});saveOrders();renderAdmin();openOrder(o.id)};
-  $('#dSaveMsg').onclick=()=>{o.message=$('#dMessage').value.trim();o.history.push({at:Date.now(),text:'Message to customer updated'});saveOrders();openOrder(o.id);toast('Message saved')};
-  $('#dNote').onchange=e=>{o.note=e.target.value;saveOrders()};
-  $('#dStatus').onchange=e=>{if(e.target.value==='Declined')return decide(o.id,'decline');setStatus(o,e.target.value)};
-  $('#dProof').onclick=()=>printProof(o);
-  $('#dEdit').onclick=()=>{design=JSON.parse(JSON.stringify(o.design));sel=null;side='front';closeDrawer();switchMode('client');renderCatalog();renderStudio();toast(`Editing a copy of ${o.id}`)};
-  $('#dDel').onclick=()=>{if(!confirm(`Delete order ${o.id}? This can't be undone.`))return;orders=orders.filter(x=>x!==o);saveOrders();closeDrawer();renderAdmin()};
-  $('#drawer').classList.add('on');$('#scrim').classList.add('on');
-}
-function closeDrawer(){drawerId=null;$('#drawer').classList.remove('on');$('#scrim').classList.remove('on')}
-$('#scrim').onclick=closeDrawer;
-
-function printProof(o){
-  const p=P(o.design.productId);
-  $('#proof').innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><div><h1 style="font-size:22px">${esc(settings.name)} — Design proof</h1><div>${o.id} · ${esc(o.title)} · ${new Date().toLocaleDateString()}</div></div>${settings.logo?`<img src="${settings.logo}" style="height:50px;background:#000;padding:4px;border-radius:6px">`:''}</div>
-    <div class="pvpair">${mockBox(o.design,'front')}${hasBack(p)?mockBox(o.design,'back'):''}</div>
-    <table style="width:100%;margin-top:16px;font-size:13px;border-collapse:collapse">
-      <tr><td><b>Customer</b></td><td>${esc(o.customer.org)} — ${esc(o.customer.name)} (${esc(o.customer.email)})</td></tr>
-      <tr><td><b>Product</b></td><td>${esc(o.productName)}, ${esc(o.colorName||'')}</td></tr>
-      <tr><td><b>Sizes</b></td><td>${Object.entries(o.sizes).map(([k,v])=>`${k}: ${v}`).join(', ')} (${o.qty} total)</td></tr>
-      <tr><td><b>Total</b></td><td>${money(o.total)}</td></tr><tr><td><b>Need by</b></td><td>${o.due||'—'}</td></tr></table>
-    <p style="margin-top:30px">Approved by: ______________________ &nbsp; Date: __________</p>`;
-  setTimeout(()=>window.print(),300);
-}
-
-/* products */
-function renderProducts(){
-  $('#prodGrid').innerHTML=products.map(p=>`
-    <div class="pitem ${p.active?'':'off'}">
-      <div class="pv">${mockBox({productId:p.id,colorId:p.colors[0]?.id,layers:[]},'front')}</div>
-      <div class="body">
-        <div class="row" style="justify-content:space-between"><b>${esc(p.name)}</b><label class="switch" title="Visible to customers"><input type="checkbox" data-act="${p.id}" ${p.active?'checked':''}><span></span></label></div>
-        <div class="muted" style="font-size:12px;margin:4px 0 10px">${esc(p.category||'')} · ${money(p.price)} · ${p.colors.length} colors · ${p.sizes.length} sizes</div>
-        <div class="row"><button class="btn sm" data-edit="${p.id}">Edit</button><button class="btn sm" data-dup="${p.id}">Duplicate</button><button class="btn sm bad" data-pdel="${p.id}">Delete</button></div>
-      </div>
-    </div>`).join('')||'<div class="blank">No products yet. Add your first one.</div>';
-  $$('[data-act]').forEach(c=>c.onchange=()=>{P(c.dataset.act).active=c.checked;saveProducts();renderProducts();renderCatalog();toast(c.checked?'Now visible to customers':'Hidden from customers')});
-  $$('[data-edit]').forEach(b=>b.onclick=()=>editProduct(b.dataset.edit));
-  $$('[data-dup]').forEach(b=>b.onclick=()=>{const c=JSON.parse(JSON.stringify(P(b.dataset.dup)));c.id=uid();c.name+=' (copy)';products.push(c);saveProducts();renderProducts()});
-  $$('[data-pdel]').forEach(b=>b.onclick=()=>{const p=P(b.dataset.pdel);if(!confirm(`Delete “${p.name}”? Past orders keep their details but can't be previewed.`))return;products=products.filter(x=>x!==p);saveProducts();if(design.productId===p.id){design=freshDesign()}renderProducts();renderCatalog();renderStudio()});
-}
-$('#newProduct').onclick=()=>editProduct(null);
-
-let ep=null, epSide='front';
-function editProduct(id){
-  ep=id?JSON.parse(JSON.stringify(P(id))):{id:uid(),name:'',category:'',active:true,price:15,extraLoc:4,extraEl:.75,cost:5,minQty:12,sizes:['S','M','L','XL','2XL'],upcharge:{'2XL':2},images:{front:'',back:''},print:{front:[30,25,40,45],back:[30,22,40,50]},colors:[{id:uid(),name:'White',hex:'#ffffff'}]};
-  ep._new=!id;epSide='front';drawerId=null;renderEP();
-  $('#drawer').classList.add('on');$('#scrim').classList.add('on');
-}
-function renderEP(){
-  const p=ep;
-  $('#dHead').innerHTML=`<div class="grow"><b style="font-size:17px">${p._new?'New product':esc(p.name)}</b><div class="muted" style="font-size:12px">Changes apply when you save</div></div><button class="btn sm" id="dClose">✕</button>`;
-  const prevDesign={productId:'__ep',colorId:p.colors[0]?.id,layers:[]};
-  $('#dBody').innerHTML=`
-    <div class="row"><div class="field grow"><label>Product name</label><input id="eName" value="${esc(p.name)}" placeholder="Crewneck Sweatshirt"></div><div class="field" style="width:160px"><label>Category</label><input id="eCat" value="${esc(p.category)}" placeholder="Fleece"></div></div>
-
-    <h3 class="sec">Blank images</h3>
-    <p class="hint" style="margin:-4px 0 10px">Upload a white or light-colored blank so it can be recolored. Photos on a white background get their background removed automatically.</p>
-    <div class="row" style="margin-bottom:6px">
-      ${['front','back'].map(s=>`<div class="grow box" style="margin:0;padding:12px"><div class="row"><img class="mini" src="${p.images[s]||''}" style="${p.images[s]?'':'visibility:hidden'}"><div class="grow"><b>${s==='front'?'Front':'Back'}</b><div class="muted" style="font-size:12px">${p.images[s]?'Uploaded':s==='back'?'Optional':'Required'}</div></div><label class="btn sm upl">Upload<input type="file" accept="image/*" data-img="${s}"></label>${s==='back'&&p.images.back?'<button class="btn sm" id="eNoBack">✕</button>':''}</div></div>`).join('')}
-    </div>
-    <label class="row hint"><input type="checkbox" id="eRmBg" checked> Remove white background on upload</label>
-
-    <h3 class="sec">Print area</h3>
-    <div class="row" style="align-items:flex-start;gap:16px">
-      <div style="width:220px;flex:none"><div class="tabs" style="margin-bottom:8px">${['front','back'].filter(s=>s==='front'||p.images.back).map(s=>`<button class="${epSide===s?'on':''}" data-eside="${s}">${s}</button>`).join('')}</div>
-        <div class="mock checker" id="ePrev" style="width:220px;border-radius:10px"></div></div>
-      <div class="grow">${['Left','Top','Width','Height'].map((k,i)=>`<div class="field"><label>${k} · <span id="pa${i}v">${p.print[epSide][i]}</span>%</label><input type="range" min="0" max="${i<2?90:100}" value="${p.print[epSide][i]}" data-pa="${i}"></div>`).join('')}</div>
-    </div>
-
-    <h3 class="sec">Colors</h3>
-    <p class="hint" style="margin:-4px 0 10px">Pick a color to tint the blank, or upload a real photo of that color for the most realistic mockup.</p>
-    <div id="eColors">${p.colors.map((c,i)=>`<div class="colrow">
-      <input type="color" value="${c.hex}" data-chex="${i}"><input value="${esc(c.name)}" data-cname="${i}" placeholder="Color name">
-      <label class="btn sm upl" title="Photo of front">${c.front?'✓ ':''}Front photo<input type="file" accept="image/*" data-cimg="${i}:front"></label>
-      <label class="btn sm upl" title="Photo of back">${c.back?'✓ ':''}Back photo<input type="file" accept="image/*" data-cimg="${i}:back"></label>
-      <button class="btn sm" data-cdel="${i}">✕</button></div>`).join('')}</div>
-    <button class="btn sm" id="eAddColor">+ Add color</button>
-
-    <h3 class="sec">Sizes</h3>
-    <div class="chips" style="margin-bottom:10px">${ALL_SIZES.map(s=>`<button class="chip plain ${p.sizes.includes(s)?'on':''}" data-sz="${s}">${s}</button>`).join('')}</div>
-    <div class="sizes">${p.sizes.map(s=>`<div><label>${s} +$</label><input type="number" min="0" step=".5" value="${p.upcharge[s]||0}" data-up="${s}"></div>`).join('')}</div>
-    <p class="hint">Upcharge added per piece for that size.</p>
-
-    <h3 class="sec">Pricing</h3>
-    <div class="row">
-      <div class="field grow"><label>Price (1 print location)</label><input type="number" step=".25" min="0" id="ePrice" value="${p.price}"></div>
-      <div class="field grow"><label>Each extra location</label><input type="number" step=".25" min="0" id="eLoc" value="${p.extraLoc}"></div>
-      <div class="field grow"><label>Each extra element</label><input type="number" step=".25" min="0" id="eEl" value="${p.extraEl}"></div>
-    </div>
-    <div class="row">
-      <div class="field grow"><label>Your blank cost (private)</label><input type="number" step=".25" min="0" id="eCost" value="${p.cost}"></div>
-      <div class="field grow"><label>Minimum order (pcs)</label><input type="number" min="1" id="eMin" value="${p.minQty}"></div>
-      <div class="field grow"><label>Margin at min qty</label><input disabled id="eMargin"></div>
-    </div>
-    <label class="row" style="cursor:pointer;margin-top:4px"><span class="switch"><input type="checkbox" id="eActive" ${p.active?'checked':''}><span></span></span>Visible to customers</label>`;
-  $('#dFoot').innerHTML=`<div class="grow"></div><button class="btn" id="eCancel">Cancel</button><button class="btn primary" id="eSave">${p._new?'Add product':'Save changes'}</button>`;
-
-  // live preview uses a temporary product entry
-  const drawPrev=()=>{products=products.filter(x=>x.id!=='__ep');products.push({...ep,id:'__ep'});const pv=$('#ePrev');pv.innerHTML=ep.images.front?mockHTML({...prevDesign,colorId:ep.colors[0]?.id},epSide,false).replace('class="print ','class="print guide '):'<div class="nomock">Upload a front image</div>';products=products.filter(x=>x.id!=='__ep')};
-  drawPrev();
-  const margin=()=>{const m=ep.price>0?(ep.price-ep.cost)/ep.price*100:0;$('#eMargin').value=`${money(ep.price-ep.cost)} / pc (${m.toFixed(0)}%)`};margin();
-  const bindNum=(id,k)=>$(id).oninput=e=>{ep[k]=+e.target.value;margin()};
-  bindNum('#ePrice','price');bindNum('#eLoc','extraLoc');bindNum('#eEl','extraEl');bindNum('#eCost','cost');bindNum('#eMin','minQty');
-  $('#eName').oninput=e=>ep.name=e.target.value;$('#eCat').oninput=e=>ep.category=e.target.value;$('#eActive').onchange=e=>ep.active=e.target.checked;
-  $$('[data-img]').forEach(inp=>inp.onchange=async()=>{const f=inp.files[0];if(!f)return;toast('Processing image…');ep.images[inp.dataset.img]=await readImg(f,{max:900,removeBg:$('#eRmBg').checked});renderEP()});
-  $('#eNoBack')&&($('#eNoBack').onclick=()=>{ep.images.back='';epSide='front';renderEP()});
-  $$('[data-eside]').forEach(b=>b.onclick=()=>{epSide=b.dataset.eside;renderEP()});
-  $$('[data-pa]').forEach(r=>r.oninput=()=>{ep.print[epSide][+r.dataset.pa]=+r.value;$('#pa'+r.dataset.pa+'v').textContent=r.value;drawPrev()});
-  $$('[data-chex]').forEach(i=>i.oninput=()=>{ep.colors[+i.dataset.chex].hex=i.value;drawPrev()});
-  $$('[data-cname]').forEach(i=>i.oninput=()=>ep.colors[+i.dataset.cname].name=i.value);
-  $$('[data-cimg]').forEach(inp=>inp.onchange=async()=>{const f=inp.files[0];if(!f)return;const[i,s]=inp.dataset.cimg.split(':');toast('Processing image…');ep.colors[+i][s]=await readImg(f,{max:900,removeBg:$('#eRmBg').checked});renderEP()});
-  $$('[data-cdel]').forEach(b=>b.onclick=()=>{if(ep.colors.length<2)return toast('Keep at least one color');ep.colors.splice(+b.dataset.cdel,1);renderEP()});
-  $('#eAddColor').onclick=()=>{ep.colors.push({id:uid(),name:'New color',hex:'#888888'});renderEP()};
-  $$('[data-sz]').forEach(b=>b.onclick=()=>{const s=b.dataset.sz;ep.sizes=ep.sizes.includes(s)?ep.sizes.filter(x=>x!==s):ALL_SIZES.filter(x=>x===s||ep.sizes.includes(x));renderEP()});
-  $$('[data-up]').forEach(i=>i.oninput=()=>ep.upcharge[i.dataset.up]=+i.value);
-  $('#dClose').onclick=$('#eCancel').onclick=closeDrawer;
-  $('#eSave').onclick=()=>{
-    if(!ep.name.trim())return toast('Give the product a name');
-    if(!ep.images.front)return toast('Upload a front image');
-    if(!ep.sizes.length)return toast('Pick at least one size');
-    const isNew=ep._new;delete ep._new;
-    const i=products.findIndex(x=>x.id===ep.id);if(i>=0)products[i]=ep;else products.push(ep);
-    if(!saveProducts())return;
-    closeDrawer();renderProducts();renderCatalog();renderStudio();toast(isNew?'Product added':'Product saved');
-  };
-}
-
-/* pricing */
-function renderPricing(){
-  $('#priceTable').innerHTML=`<tr><th>Product</th><th>Price</th><th>Extra location</th><th>Extra element</th><th>Blank cost</th><th>Min qty</th><th>Margin</th></tr>`+products.map(p=>`<tr>
-    <td><b>${esc(p.name)}</b>${p.active?'':' <span class="badge">Hidden</span>'}</td>
-    ${['price','extraLoc','extraEl','cost','minQty'].map(k=>`<td><input type="number" step="${k==='minQty'?1:.25}" min="0" value="${p[k]}" data-pp="${p.id}:${k}" style="width:90px"></td>`).join('')}
-    <td data-mg="${p.id}">${p.price?((p.price-p.cost)/p.price*100).toFixed(0):0}%</td></tr>`).join('');
-  $$('[data-pp]').forEach(i=>i.oninput=()=>{const[id,k]=i.dataset.pp.split(':'),p=P(id);p[k]=+i.value;saveProducts();$(`[data-mg="${id}"]`).textContent=(p.price?((p.price-p.cost)/p.price*100).toFixed(0):0)+'%';renderPrice();renderCatalog()});
-  $('#tierEdit').innerHTML=`<div class="row muted" style="font-size:12px;margin-bottom:6px"><span style="width:110px">From qty</span><span class="grow">Discount %</span></div>`+settings.tiers.map((t,i)=>`<div class="row" style="margin-bottom:6px"><input type="number" min="1" value="${t.min}" data-tmin="${i}" style="width:110px"><input type="number" min="0" max="90" value="${t.off}" data-toff="${i}"><button class="btn sm" data-tdel="${i}">✕</button></div>`).join('');
-  $$('[data-tmin]').forEach(i=>i.oninput=()=>{settings.tiers[+i.dataset.tmin].min=+i.value;saveSettings();renderPrice()});
-  $$('[data-toff]').forEach(i=>i.oninput=()=>{settings.tiers[+i.dataset.toff].off=+i.value;saveSettings();renderPrice();renderCatalog()});
-  $$('[data-tdel]').forEach(b=>b.onclick=()=>{settings.tiers.splice(+b.dataset.tdel,1);saveSettings();renderPricing();renderPrice()});
-  [['#sDeposit','deposit'],['#sRush','rush'],['#sTax','tax']].forEach(([id,k])=>{$(id).value=settings[k];$(id).oninput=e=>{settings[k]=+e.target.value;saveSettings()}});
-}
-$('#addTier').onclick=()=>{const last=settings.tiers[settings.tiers.length-1];settings.tiers.push({min:(last?.min||12)*2,off:(last?.off||0)+3});saveSettings();renderPricing();renderPrice()};
-
-/* customers */
-function renderCustomers(){
-  const m={};
-  orders.forEach(o=>{const k=o.customer.email.toLowerCase();const c=m[k]||(m[k]={org:o.customer.org,name:o.customer.name,email:o.customer.email,phone:o.customer.phone,n:0,pcs:0,spend:0,last:0});c.n++;if(live(o)&&o.status!=='Pending'){c.pcs+=o.qty;c.spend+=o.total}c.last=Math.max(c.last,o.at)});
-  const list=Object.values(m).sort((a,b)=>b.spend-a.spend);
-  $('#custTable').innerHTML=list.length?`<tr><th>Organization</th><th>Contact</th><th>Orders</th><th>Pieces</th><th>Lifetime spend</th><th>Last order</th><th></th></tr>`+list.map(c=>`<tr>
-    <td><b>${esc(c.org)}</b></td><td>${esc(c.name)}<div class="muted" style="font-size:12px">${esc(c.email)}${c.phone?' · '+esc(c.phone):''}</div></td>
-    <td>${c.n}</td><td>${c.pcs}</td><td>${money0(c.spend)}</td><td>${fmtDate(c.last)}</td>
-    <td><button class="btn sm" data-cust="${esc(c.email)}">View orders</button></td></tr>`).join(''):`<tr><td style="padding:40px;text-align:center" class="muted">Customers show up here after their first order.</td></tr>`;
-  $$('[data-cust]').forEach(b=>b.onclick=()=>{osearch=b.dataset.cust;$('#orderSearch').value=osearch;ofilter='All';$('[data-apane=orders]').click()});
-}
-
-/* settings */
-function renderSettings(){
-  $('#sName').value=settings.name;$('#sAccent').value=settings.accent;$('#sTurn').value=settings.turnaround;$('#sEmail').value=settings.email;$('#sPhone').value=settings.phone;$('#sPin').value=settings.pin;
-  $('#sLogoPrev').src=settings.logo||'';
-}
-[['#sName','name'],['#sTurn','turnaround'],['#sEmail','email'],['#sPhone','phone'],['#sPin','pin']].forEach(([id,k])=>$(id).oninput=e=>{settings[k]=e.target.value;saveSettings();applyBrand()});
-$('#sAccent').oninput=e=>{settings.accent=e.target.value;saveSettings();applyBrand()};
-$('#sLogo').onchange=async e=>{const f=e.target.files[0];if(!f)return;settings.logo=await readImg(f,{max:500});saveSettings();applyBrand();renderSettings()};
-$('#sLogoReset').onclick=()=>{settings.logo=DEFAULT_SETTINGS.logo;saveSettings();applyBrand();renderSettings()};
-$('#exportAll').onclick=()=>{const b=new Blob([JSON.stringify({settings,products,orders},null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=`${settings.name.replace(/\W+/g,'-')}-backup.json`;a.click()};
-$('#importAll').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d.products||!d.orders)throw 0;settings={...DEFAULT_SETTINGS,...d.settings};products=d.products;orders=d.orders;saveSettings();saveProducts();saveOrders();boot();toast('Backup restored')}catch(_){toast('That file is not a valid backup')}};r.readAsText(f)};
-$('#resetAll').onclick=()=>{if(!confirm('Reset the shop? This erases all orders, products and settings in this browser.'))return;Object.keys(localStorage).filter(k=>k.startsWith(NS)).forEach(k=>localStorage.removeItem(k));location.hash='';location.reload()};
-$('#copyLink').onclick=()=>{const u=location.href.split('#')[0];navigator.clipboard?.writeText(u).then(()=>toast('Customer link copied'),()=>toast(u))};
-
-/* CSV */
-$('#csvBtn').onclick=()=>{
-  const rows=[['Order','Date','Status','Paid','Organization','Contact','Email','Phone','Title','Product','Color','Sizes','Qty','Total','Need by','Notes']];
-  filteredOrders().forEach(o=>rows.push([o.id,new Date(o.at).toISOString().slice(0,10),SLABEL[o.status],o.paid?'Yes':'No',o.customer.org,o.customer.name,o.customer.email,o.customer.phone,o.title,o.productName,o.colorName,Object.entries(o.sizes).map(([k,v])=>`${k}:${v}`).join(' '),o.qty,o.total.toFixed(2),o.due,o.notes]));
-  const csv=rows.map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='orders.csv';a.click();
-};
-
-/* demo orders */
-$('#seedBtn').onclick=()=>{
-  const T=(text,f,o)=>({id:uid(),type:'text',text,font:f,size:24,color:'#ffffff',x:50,y:30,rot:0,ls:.08,side:'front',...o});
-  const tee=P('tee')?'tee':products[0]?.id, hood=P('hoodie')?'hoodie':tee;
-  const day=864e5,now=Date.now();
-  const demo=[
-    {c:['Alpha Sigma Phi','Jake Morris','jake@asp-beta.org','(555) 201-3344'],t:'Fall Rush 2026',st:'Pending',p:tee,col:'navy',sz:{S:8,M:20,L:22,XL:10},due:12,L:[T('ΑΣΦ','Noto Serif',{size:30,y:35}),T('FALL RUSH','Graduate',{size:10,y:62,color:'#d4af37'}),T('ΑΣΦ','Noto Serif',{size:40,side:'back',y:20,color:'#d4af37',stroke:'#ffffff'})]},
-    {c:['Chi Phi','Ryan Lee','ryan@chiphi-gamma.org',''],t:'Bid Day',st:'Pending',p:hood,col:'white',sz:{M:24,L:24,XL:12},due:20,L:[T('CHI PHI','Oswald',{size:18,color:'#c8102e',y:30}),T('BID DAY 2026','Graduate',{size:8,color:'#111111',y:60})]},
-    {c:['Sigma Chi','Tyler Brooks','tyler@sigmachi-ep.org',''],t:'Parents Weekend',st:'Production',p:tee,col:'carolina',sz:{S:10,M:25,L:25,XL:15,'2XL':5},due:9,paid:true,L:[T('ΣΧ','Noto Serif',{size:34,color:'#1f3a93',y:30}),T('PARENTS WEEKEND','Bebas Neue',{size:10,color:'#ffffff',y:58})]},
-    {c:['Kappa Delta','Emma Chen','emma@kd-alpha.org','(555) 330-1200'],t:'Formal 2026',st:'Approved',p:hood,col:'pink',sz:{S:24,M:20,L:12},due:25,L:[T('ΚΔ','Playfair Display',{size:40,color:'#1f3a93',y:45})]},
-    {c:['Pi Kappa Alpha','Sam Ortiz','sam@pike-zeta.org',''],t:'Philanthropy Week',st:'Declined',p:tee,col:'black',sz:{M:6,L:4},due:4,decl:'Below minimum quantity',L:[T('ΠΚΑ','Noto Serif',{size:30,y:35})]},
-    {c:['Delta Gamma','Ava Patel','ava@dg-omega.org',''],t:'Anchor Splash',st:'Completed',p:tee,col:'white',sz:{XS:10,S:30,M:30},due:-5,paid:true,L:[T('ΔΓ','Noto Serif',{size:30,color:'#1f3a93',y:30}),T('ANCHOR SPLASH','Graduate',{size:9,color:'#d4af37',y:58})]}
-  ].map((d,i)=>{
-    const des={productId:d.p,colorId:(P(d.p).colors.find(c=>c.id===d.col)||P(d.p).colors[0]).id,layers:d.L};
-    const due=new Date(now+d.due*day).toISOString().slice(0,10),q=quote(des,d.sz,due),at=now-(6-i)*day*1.5;
-    return{id:'#'+settings.nextOrder++,customer:{org:d.c[0],name:d.c[1],email:d.c[2],phone:d.c[3]},title:d.t,due,notes:'',sizes:d.sz,qty:q.qty,total:q.total,unit:q.unit,cost:q.cost,
-      productName:P(d.p).name,colorName:colorOf(des).name,design:des,status:d.st,paid:!!d.paid,declineReason:d.decl,at,
-      history:[{at,text:'Order submitted'},...(d.st!=='Pending'?[{at:at+day/3,text:SLABEL[d.st]+(d.decl?` — ${d.decl}`:'')}]:[])]};
-  });
-  orders=[...demo.reverse(),...orders];saveOrders();saveSettings();renderAdmin();toast('Demo orders loaded');
-};
-
-/* =========================================================
-   Mode switching + boot
-   ========================================================= */
-function switchMode(m){
-  if(m==='admin'&&settings.pin&&sessionStorage.getItem(NS+'unlocked')!==settings.pin){
-    const v=prompt('Enter HQ passcode');if(v!==settings.pin){if(v!==null)toast('Wrong passcode');return}
-    sessionStorage.setItem(NS+'unlocked',v);
-  }
-  $$('.mode button').forEach(b=>b.classList.toggle('on',b.dataset.mode===m));
-  $('#client').classList.toggle('on',m==='client');$('#admin').classList.toggle('on',m==='admin');
-  $('#steps').style.visibility=m==='client'?'visible':'hidden';$('#prodName').style.display=m==='client'?'':'none';
-  history.replaceState(null,'',m==='admin'?'#hq':location.pathname+location.search);
-  if(m==='admin')renderAdmin();else closeDrawer();
-}
-$$('.mode button').forEach(b=>b.onclick=()=>switchMode(b.dataset.mode));
-$$('.modal').forEach(m=>m.addEventListener('pointerdown',e=>{if(e.target===m)m.classList.remove('on')}));
-addEventListener('keydown',e=>{if(e.key==='Escape'){$$('.modal').forEach(m=>m.classList.remove('on'));closeDrawer()}});
-
-function boot(){applyBrand();renderLib();renderCatalog();renderStudio();renderAdmin();if(location.hash==='#hq')switchMode('admin')}
-boot();
-</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
+<script src="api.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

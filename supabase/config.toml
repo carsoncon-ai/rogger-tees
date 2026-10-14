@@ -1,0 +1,12 @@
+project_id = "rogger-studio"
+
+# Stripe calls this without a Supabase login; it verifies Stripe's signature instead.
+[functions.stripe-webhook]
+verify_jwt = false
+
+# Customers pay and get receipts without an account (they use their private order link).
+[functions.checkout]
+verify_jwt = false
+
+[functions.notify]
+verify_jwt = false
